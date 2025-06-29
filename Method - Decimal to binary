@@ -1,0 +1,30 @@
+import java.util.Scanner;
+
+public class Hello{
+	public static int binary(int num){
+		int result = 0;
+		
+		for( ; num!=0; num/=2){
+			int remainder = num%2;
+			result = (result*10) + remainder;
+		}
+		
+		int reverse = 0;
+		for( ; result!=0; result/=10){
+			int remainder = result%10;
+			reverse = (reverse*10) + remainder;
+		}
+		return reverse;
+	}
+	
+	
+	public static void main(String[] args){
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter a decimal digit: ");
+		int n = sc.nextInt();
+		
+		System.out.println("Binary digit: " + binary(n));
+		
+	}
+}
