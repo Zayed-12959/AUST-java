@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class Hello{
+	public static int GCD(int a, int b){
+		
+		int gcd = 0;
+		
+		for(int i=1; i<=a && i<=b; i++){
+			if(a%i==0 && b%i==0){
+				gcd = i;
+			}
+		}
+		return gcd;
+	}
+	
+	public static int LCM(int a, int b){
+		int lcm = (a*b)/GCD(a,b);
+		return lcm;
+	}
+	
+	
+	
+	public static void main(String[] args){
+		
+		Scanner sc = new Scanner(System.in);
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		
+		System.out.println("GCD of the numbers: " + GCD(a,b));
+		System.out.println("LCM of the numbers: " + LCM(a,b));
+		
+	}
+}
