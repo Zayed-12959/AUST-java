@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class Hello{
+	public static int leap_year(int year){
+		if((year%400==0) || (year%4==0 && year%100!=0)){
+			return 1;
+		}
+		return 0;
+	}
+	
+	
+	
+	public static void main(String[] args){
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter a decimal digit: ");
+		int n = sc.nextInt();
+		
+		if(leap_year(n)==1){
+			System.out.println("Leap year yay");
+		}
+		else{
+			System.out.println("Not Leap year");
+		}
+		
+	}
+}
