@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class Hello{
+	public static int binary(int num){
+		int result = 0;
+		
+		for( ; num!=0; num/=2){
+			int remainder = num%2;
+			result = (result*10) + remainder;
+		}
+		
+		int reverse = 0;
+		for( ; result!=0; result/=10){
+			int remainder = result%10;
+			reverse = (reverse*10) + remainder;
+		}
+		return reverse;
+	}
+	
+	
+	public static void main(String[] args){
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter a decimal digit: ");
+		int n = sc.nextInt();
+		
+		int bin = binary(n);
+		
+		int count_1 = 0;
+		int count_0 = 0;
+		
+		for( ; bin!=0; bin/=10){
+			if(bin%10==1){
+				count_1++;
+			}
+			else{
+				count_0++;
+			}
+		}
+		
+		
+		System.out.println("Number of 1's: " + count_1);
+		System.out.println("Number of 0's: " + count_0);
+		
+	}
+}
