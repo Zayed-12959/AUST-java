@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class Hello{
+	
+	public static void main(String[] args){
+		
+		Scanner sc = new Scanner(System.in);
+		
+		String str = sc.nextLine();
+		
+		System.out.println("Length of String: " + str.length());
+		System.out.println("Uppercase String: " + str.toUpperCase());
+		System.out.println("Lowercase String: " + str.toLowerCase());
+		System.out.println("Index of String: " + str.indexOf("hudai"));
+		
+		int count = 0;
+		for(int i=0; i<str.length(); i++){
+			if(str.charAt(i)=='c'){
+				count++;
+			}
+		}
+		
+		System.out.println("Occurences of character: " + count);
+		
+	}
+}
