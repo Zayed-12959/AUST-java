@@ -1,0 +1,68 @@
+public class Book {
+    String title;
+    String genre;
+    int numberOfPages;
+    
+    Book()
+    {
+        
+    }
+    
+    Book(String t, String g, int p)
+    {
+      title = t;
+      genre = g;
+      numberOfPages = p;
+    }
+    
+    String estimatedReadingTime()
+    {
+        double readingSpeed;
+
+        switch (genre) {
+            case "Fiction":
+                readingSpeed = 1.5;
+                break;
+            case "Non-Fiction":
+                readingSpeed = 2.0;
+                break;
+            case "Comics":
+                readingSpeed = 0.5;
+                break;
+            default:
+                readingSpeed = 1.8;
+        }
+        
+        System.out.println(readingSpeed);
+        
+        double estimatedTime = (double)((numberOfPages * readingSpeed)/60.00);
+        
+        return "The estimated reading time for " + title + " is " + estimatedTime + " Hours.";
+    }
+            
+}
+
+import java.util.Scanner;
+
+public class Bookstore {
+
+    
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Title: ");
+        String title = sc.nextLine();
+        System.out.println("Genre: ");
+        String genre = sc.nextLine();
+        System.out.println("Number of Pages: ");
+        int num = sc.nextInt();
+        
+        Book est = new Book(title, genre, num);
+        
+        System.out.println(est.estimatedReadingTime());
+        
+        
+    }
+    
+}
