@@ -1,0 +1,50 @@
+public class Passenger {
+    String name;
+    double distanceTravelled;
+    boolean isPremiumMember;
+    
+    Passenger()
+    {
+        
+    }
+    
+    Passenger(String n, double d, boolean p)
+    {
+        name = n;
+        distanceTravelled = d;
+        isPremiumMember = p;
+    }
+    
+    double calculateFare()
+    {
+        if(distanceTravelled>=15 && isPremiumMember == true)
+        {
+            return (distanceTravelled*9.00) - 10.00;
+        }
+        else if(distanceTravelled<15 && isPremiumMember == true)
+        {
+            return (distanceTravelled*10.00) - 9.00;
+        }
+    return distanceTravelled*11.00;
+    }
+}
+
+import java.util.Scanner;
+
+public class BusDemo {
+
+    
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        String name = sc.nextLine();
+        double distanceTravelled = sc.nextDouble();
+        boolean isPremiumMember = sc.nextBoolean();
+        
+        Passenger omok = new Passenger(name, distanceTravelled, isPremiumMember);
+        
+        System.out.println(omok.calculateFare());
+        
+    }
+    
+}
