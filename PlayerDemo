@@ -1,0 +1,45 @@
+public class Player {
+    
+        String playerType;
+        double totalScore;
+        double totalMatches;
+        
+        Player()
+        {
+            
+        }
+        
+        Player(String t, double s, double m)
+        {
+            playerType = t;
+            totalScore = s;
+            totalMatches = m;
+        }
+        
+        double calculateFinalScore()
+        {
+            if(playerType == "new")
+            {
+                return totalScore/totalMatches;
+            }
+        return (2.00*totalScore*totalMatches)/(totalScore+totalMatches);
+        }
+        
+}
+
+public class PlayerDemo {
+
+    
+    public static void main(String[] args) {
+        
+        Player lebron = new Player("Forward", 50.00 , 5.00);
+        
+        System.out.println(lebron.playerType);
+        System.out.println(lebron.totalScore);
+        System.out.println(lebron.totalMatches);
+        
+        System.out.println(lebron.calculateFinalScore());
+        
+    }
+    
+}
