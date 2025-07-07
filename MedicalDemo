@@ -1,0 +1,52 @@
+public class Patient {
+    
+    String name;
+    double bodyTemp;
+    int duration;
+    
+    Patient()
+    {
+        
+    }
+    
+    Patient(String n, double t, int d)
+    {
+        name = n;
+        bodyTemp = t;
+        duration = d;
+    }
+    
+    String diagnosePatient()
+    {
+        if(bodyTemp>=103.00 && duration>7)
+        {
+            return "Dengue";
+        }
+        else if(bodyTemp>=100.00 && duration<7)
+        {
+            return "Common Fever";
+        }
+    return "Nothing";
+    }
+    
+}
+
+import java.util.Scanner;
+public class MedicalDemo {
+
+    
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        String name = sc.nextLine();
+        double temp = sc.nextDouble();
+        int duration = sc.nextInt();
+        
+        Patient report = new Patient(name, temp, duration);
+        
+        System.out.println(report.diagnosePatient());
+        
+    }
+    
+}
