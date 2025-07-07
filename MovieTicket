@@ -1,0 +1,54 @@
+public class Customer {
+    String customerName;
+    int age;
+    boolean isStudent;
+    
+    Customer()
+    {
+        
+    }
+    
+    Customer(String n, int a, boolean s)
+    {
+       customerName = n;
+       age = a;
+       isStudent = s;
+    }
+    
+    double calculateTicketPrice(double baseTicketPrice)
+    {
+        if(age<=12 && isStudent==true)
+        {
+            return baseTicketPrice*(80.00/100);
+        }
+        else if(age>12 && isStudent==true)
+        {
+            return baseTicketPrice*(110.00/100);
+        }
+    return baseTicketPrice + baseTicketPrice*(15.00/100);
+    }
+}
+
+import java.util.Scanner;
+public class MovieTicket {
+
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Customer Name: ");
+        String name = sc.nextLine();
+        System.out.println("Age: ");
+        int age = sc.nextInt();
+        System.out.println("is Student: ");
+        boolean isStudent = sc.nextBoolean();
+        System.out.println("Base Ticket Price: ");
+        double baseTicketPrice = sc.nextDouble();
+        
+        
+        Customer myCus = new Customer(name, age, isStudent);
+        
+        System.out.println(name + "'s Ticket Price " + myCus.calculateTicketPrice(baseTicketPrice));
+    }
+    
+}
