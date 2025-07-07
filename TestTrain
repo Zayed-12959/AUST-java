@@ -1,0 +1,56 @@
+public class Train {
+    
+    double ticketPrice;
+    String destination;
+    double distance;
+    
+    Train()
+    {
+        
+    }
+    
+    Train(double p, String d, double dis)
+    {
+        ticketPrice = p;
+        destination = d;
+        distance = dis;
+        
+    }
+    
+    double getDiscount()
+    {
+        if(distance>=6000)
+        {
+            return ticketPrice*(25.00/100.00);
+        }
+    return 0;
+    }
+    
+}
+
+
+public class TestTrain {
+
+    
+    public static void main(String[] args) {
+        
+        Train dhon = new Train(10000.00, "Kalabagan", 7000.00);
+        
+        System.out.println(dhon.destination);
+        System.out.println(dhon.distance);
+        System.out.println(dhon.ticketPrice);
+        
+        System.out.println(dhon.getDiscount());
+        
+        Train dhon2 = new Train();
+        
+        System.out.println(dhon2.destination);
+        System.out.println(dhon2.distance);
+        System.out.println(dhon2.ticketPrice);
+        
+        System.out.println(dhon2.getDiscount());
+        
+        
+    }
+    
+}
