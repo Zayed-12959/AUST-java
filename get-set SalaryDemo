@@ -1,0 +1,72 @@
+public class Worker {
+    private String designation;
+    private int hoursWorked;
+    
+    public void setDesignation(String designation)
+    {
+        this.designation = designation;
+    }
+    public String getDesignation()
+    {
+        return designation;
+    }
+    
+    public void setHoursWorked(int hoursWorked)
+    {
+        this.hoursWorked = hoursWorked;
+    }
+    public int getHoursWorked()
+    {
+        return hoursWorked;
+    }
+    
+    public Worker(String designation, int hoursWorked)
+    {
+        this.designation = designation;
+        this.hoursWorked = hoursWorked;
+    }
+    
+    
+}
+
+public class SalaryCalculator {
+    SalaryCalculator()    
+    {
+        
+    }
+    
+    double calculateSalary(Worker work)
+    {
+        if((work.getDesignation()).equals("Salesman"))
+        {
+            return work.getHoursWorked()*100;
+        }
+        else if((work.getDesignation()).equals("Manager"))
+        {
+            return work.getHoursWorked()*110;
+        }
+        else
+        {
+            return work.getHoursWorked()*60;
+        }
+    }
+}
+
+import java.util.Scanner;
+public class SalaryDemo {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Designation:");
+        String designation = sc.nextLine();
+        System.out.println("Hours Worked:");
+        int hours = sc.nextInt();
+        
+        Worker worker = new Worker(designation, hours);
+        SalaryCalculator slcalc = new SalaryCalculator();
+        
+        System.out.println("Salary is: " + slcalc.calculateSalary(worker));
+    }
+    
+}
