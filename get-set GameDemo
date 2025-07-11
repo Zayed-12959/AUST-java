@@ -1,0 +1,86 @@
+public class Player {
+    private String playerName;
+    private int playerHealth;
+    
+    public void setPlayerName(String playerName)
+    {
+        this.playerName = playerName;
+    }
+    
+    public String getPlayerName()
+    {
+        return playerName;
+    }
+    
+    public void setPlayerHealth(int playerHealth)
+    {
+        this.playerHealth = playerHealth;
+    }
+    
+    public int getPlayerHealth()
+    {
+        return playerHealth;
+    }
+    
+    Player(String playerName, int playerHealth)
+    {
+        this.playerName = playerName;
+        this.playerHealth = playerHealth;
+    }
+    
+}
+
+public class LevelManager {
+    private int lifeThreshold;
+    
+    public void setLifeThreshold(int lifeThreshold)
+    {
+        this.lifeThreshold = lifeThreshold;
+    }
+    
+    public int getLifeThreshold()
+    {
+        return lifeThreshold;
+    }
+    
+    
+    
+    LevelManager(int lifeThreshold)
+    {
+        this.lifeThreshold = lifeThreshold; 
+    }
+    
+    void checkPlayer(Player playa)
+    {
+        if(playa.getPlayerHealth() <= lifeThreshold)
+        {
+            System.out.println(playa.getPlayerName() + " is dead");
+        }
+        else
+        {
+            System.out.println(playa.getPlayerName() + " is alive");
+        }
+    }
+}
+
+import java.util.Scanner;
+public class GameDemo {
+
+    public static void main(String[] args) {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Player Name:");
+        String name = sc.nextLine();
+        System.out.println("Player Health:");
+        int health = sc.nextInt();
+        System.out.println("Threshold");
+        int lifeth = sc.nextInt();
+        
+        Player playa = new Player(name, health);
+        LevelManager level = new LevelManager(lifeth);
+        
+        level.checkPlayer(playa);
+    }
+    
+}
