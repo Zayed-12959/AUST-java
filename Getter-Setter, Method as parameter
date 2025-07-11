@@ -1,0 +1,76 @@
+public class Circle {
+    private double radius;
+    private String color;
+    
+    public double getRadius()
+    {
+        return radius;
+    }
+    
+    public void setRadius(double radius)
+    {
+        if(radius == 0)
+        {
+            this.radius = 1;
+        }
+        else if(radius > 0)
+        {
+            this.radius = radius;
+        }
+    }
+    
+    public String getColor()
+    {
+        return color;
+    }
+    
+    public void setColor(String color)
+    {
+        this.color = color;
+    }
+    
+    Circle()
+    {
+    
+    }
+    
+    Circle(double radius, String color)
+    {
+        this.radius = radius;
+        this.color = color;
+    }
+    
+    double calculateArea()
+    {
+        return Math.PI * Math.pow(radius,2);
+    }
+    
+    boolean testObject(Circle circleObj)
+    {
+        return (radius == circleObj.radius) && (color == circleObj.color);
+    }
+}
+
+public class ShapeDemo {
+
+    public static void main(String[] args) {
+        
+        Circle c1 = new Circle(12.00 , "Green");
+        
+        c1.setRadius(0);
+        System.out.println(c1.getRadius());
+        
+        System.out.println(c1.calculateArea());
+        
+        c1.setRadius(15);
+        System.out.println(c1.getRadius());
+        
+        System.out.println(c1.calculateArea());
+        
+        Circle c2 = new Circle(20.00, "red");
+        
+        System.out.println("Are values equal?" + "--" + c1.testObject(c2));
+        
+    }
+    
+}
