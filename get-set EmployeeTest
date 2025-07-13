@@ -1,0 +1,76 @@
+public class Developer {
+    private int totalProjects;
+    private int totalMonths;
+    
+    public void setTotalProjects()
+    {
+        this.totalProjects = totalProjects;
+    }
+    
+    public int getTotalProjects()
+    {
+        return totalProjects;
+    }
+    
+    public void setTotalMonths()
+    {
+        this.totalMonths = totalMonths;
+    }
+    
+    public int getTotalMonths()
+    {
+        return totalMonths;
+    }
+    
+    Developer(int totalProjects, int totalMonths)
+    {
+        this.totalProjects = totalProjects;
+        this.totalMonths = totalMonths;
+    }    
+}
+
+public class HROfficer {
+    private int cutoff;
+    
+    HROfficer()
+    {
+        cutoff = 150;
+    }
+    
+    void checkPerformance(Developer dev)
+    {
+        int performance = dev.getTotalProjects() + (10 * dev.getTotalMonths());
+        System.out.println("The performance result is: " + performance);
+        
+        if(performance>=cutoff)
+        {
+            System.out.println("Employee Promoted");
+        }
+        else
+        {
+            System.out.println("Employee not promoted");
+        }
+    }
+    
+}
+import java.util.Scanner;
+public class EmployeeTest {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Total Projects: ");
+        int projects = sc.nextInt();
+        System.out.println("Total Months: ");
+        int months = sc.nextInt();
+        
+        Developer dev = new Developer(projects, months);
+        HROfficer HR = new HROfficer();
+        
+        HR.checkPerformance(dev);
+    }
+    
+}
