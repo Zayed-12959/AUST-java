@@ -1,0 +1,85 @@
+public class Batsman {
+    private int totalRuns;
+    private int totalOuts;
+    
+    Batsman(int totalRuns, int totalOuts)
+    {
+       this.totalRuns = totalRuns;
+       this.totalOuts = totalOuts;
+    }
+    
+    public void settotalRuns(int totalRuns)
+    {
+        this.totalRuns = totalRuns;
+    }
+    
+    public int gettotalRuns()
+    {
+        return totalRuns;
+    }
+    
+    public void settotalOuts(int totalOuts)
+    {
+        if(totalOuts>10)
+        {
+            this.totalOuts = 10;
+        }
+        else
+        {
+            this.totalOuts = totalOuts;
+        }
+    }
+    
+    public int gettotalOuts()
+    {
+        return totalOuts;
+    }  
+}
+
+public class Committee {
+    private int selectionCriteria;
+    
+    Committee(int selectionCriteria)
+    {
+        this.selectionCriteria = selectionCriteria;
+    }
+    
+    public void calculateAverage(Batsman bat)
+    {
+        int average = bat.gettotalRuns()/bat.gettotalOuts();
+        System.out.println("Average of Batsman is: " + average);
+        
+        if(average>=selectionCriteria)
+        {
+            System.out.println("Batsman Selected");
+        }
+        else
+        {
+            System.out.println("Batsman Not Selected");
+        }
+    }
+}
+
+import java.util.Scanner;
+public class BatsmanSelection {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Total Runs: ");
+        int run = sc.nextInt();
+        System.out.println("Total Outs: ");
+        int out = sc.nextInt();
+        System.out.println("Selection Criteria: ");
+        int crit = sc.nextInt();
+        
+        Batsman bat = new Batsman(run,out);
+        Committee cot = new Committee(crit);
+        
+        cot.calculateAverage(bat);
+    }
+    
+}
