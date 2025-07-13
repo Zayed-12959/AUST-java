@@ -1,0 +1,93 @@
+public class Developer {
+    private int lineOfCodeWritten;
+    private int totalMonths;
+    
+    public void setlineOfCodeWritten()
+    {
+        this.lineOfCodeWritten = lineOfCodeWritten;
+    }
+    
+    public int getlineOfCodeWritten()
+    {
+        return lineOfCodeWritten;
+    }
+    
+    public void settotalMonths()
+    {
+        this.totalMonths = totalMonths;
+    }
+    
+    public int gettotalMonths()
+    {
+        return totalMonths;
+    }
+    
+    Developer(int lineOfCodeWritten, int totalMonths)
+    {
+        this.lineOfCodeWritten = lineOfCodeWritten;
+        this.totalMonths = totalMonths;
+    }
+    
+    
+}
+
+public class HROfficer {
+    private int minimumPerformanceRate;
+    
+    public void setminimumPerformanceRate(int minimumPerformanceRate)
+    {
+        if(minimumPerformanceRate<0)
+        {
+            this.minimumPerformanceRate = 0;
+        }
+        else
+        {
+            this.minimumPerformanceRate = minimumPerformanceRate;
+        }
+    }
+    
+    HROfficer(int minimumPerformanceRate)
+    {
+        this.minimumPerformanceRate = minimumPerformanceRate;
+    }
+    
+    public void checkPerformance(Developer dev)
+    {
+        int finalPerformance = dev.getlineOfCodeWritten()/dev.gettotalMonths();
+        System.out.println("The performance result is: " + finalPerformance);
+        
+        if(finalPerformance<=minimumPerformanceRate)
+        {
+            System.out.println("Incriment Salary");
+        }
+        else
+        {
+            System.out.println("No Increment Salary");
+        }
+    }
+    
+}
+
+import java.util.Scanner;
+public class TestEmployee {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+       Scanner sc = new Scanner(System.in);
+       
+        System.out.println("Line of Code: ");
+        int cdline = sc.nextInt();
+        System.out.println("Total Months: ");
+        int month = sc.nextInt();
+        System.out.println("Minimum Performance Rate: ");
+        int minprate = sc.nextInt();
+        
+        Developer dev = new Developer(cdline, month);
+        HROfficer cp = new HROfficer(minprate);
+        
+        cp.checkPerformance(dev);
+    }
+    
+}
