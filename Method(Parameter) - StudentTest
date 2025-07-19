@@ -1,0 +1,70 @@
+public class Appliance {
+    private double powerConsumption;
+    
+    Appliance(double powerConsumption){
+        setPowerConsumption(powerConsumption);
+    }
+    
+    double getPowerConsumption(){
+        return powerConsumption;
+    }
+    
+    void setPowerConsumption(double powerConsumption){
+        if(powerConsumption<2000){
+            this.powerConsumption = 2500;
+        }
+        else{
+            this.powerConsumption = powerConsumption;
+        }
+    }  
+}
+
+public class ApplianceFactory {
+    
+    Appliance createAppliance(double voltage){
+        Appliance powerConsumption = new Appliance(voltage);
+        powerConsumption.setPowerConsumption(voltage);
+        return powerConsumption;
+    }
+    
+    Appliance createAppliance(double voltage, double current){
+        Appliance powerConsumption = new Appliance(voltage);
+        powerConsumption.setPowerConsumption(voltage * current);
+        return powerConsumption;
+    }
+    
+    Appliance createAppliance(int hours, int powerRating, double efficiency){
+        Appliance powerConsumption = new Appliance(efficiency);
+        powerConsumption.setPowerConsumption((powerRating/efficiency)*hours);
+        return powerConsumption;
+    }
+    
+}
+
+import java.util.Scanner;
+public class StudentTest {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Input Voltage: ");
+        double volt1 = sc.nextDouble();
+        System.out.println("Input Voltage, Current: ");
+        double volt2 = sc.nextDouble();
+        double curr2 = sc.nextDouble();
+        System.out.println("Input Hours, Power Rating, Efficiency: ");
+        int hour3 = sc.nextInt();
+        int powrate3 = sc.nextInt();
+        double efficiency3 = sc.nextDouble(); //auto type casting
+        
+        ApplianceFactory createApp = new ApplianceFactory();
+        Appliance app1 = createApp.createAppliance(volt1);
+        Appliance app2 = createApp.createAppliance(volt2, curr2);
+        Appliance app3 = createApp.createAppliance(hour3, powrate3, efficiency3);
+        
+        System.out.println("Power Consumption: " + app1.getPowerConsumption());
+        System.out.println("Power Consumption: " + app2.getPowerConsumption());
+        System.out.println("Power Consumption: " + app3.getPowerConsumption());
+    }
+    
+}
