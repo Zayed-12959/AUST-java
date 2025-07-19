@@ -1,0 +1,75 @@
+public class Code {
+    
+    private double linesOfCode;
+    
+    public void setLinesOfCode(double linesOfCode){
+        if(linesOfCode<=200){
+            this.linesOfCode = 250;
+        }
+        else{
+            this.linesOfCode = linesOfCode;
+        }
+    }
+    
+    public double getLinesOfCode(){
+        return linesOfCode;
+    }
+    
+    Code(double linesOfCode){
+        setLinesOfCode(linesOfCode);
+    }
+}
+
+public class CodeFactory {
+    Code createCode(int methods){
+        Code appliance = new Code(methods);
+        
+        appliance.setLinesOfCode((double)methods * 20.00);
+        
+        return appliance;
+    }
+    
+    Code createCode(int methods, int linesPerMethod){
+        Code appliance = new Code(methods);
+        
+        appliance.setLinesOfCode((double)methods * (double)linesPerMethod);
+        
+        return appliance;
+    }
+    
+    Code createCode(int methods, int linesPerMethod, int redundentLinesPerMethod){
+        Code appliance = new Code(methods);
+        
+        appliance.setLinesOfCode(((double)methods * (double)linesPerMethod)/(double)redundentLinesPerMethod);
+        
+        return appliance;
+    }
+}
+import java.util.Scanner;
+public class CodeTest {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Input Methods: ");
+        int meth1 = sc.nextInt();
+        System.out.println("Input Methods, Lines Per Methods : ");
+        int meth2 = sc.nextInt();
+        int lpm2 = sc.nextInt();
+        System.out.println("Input Methods, Lines Per Methods, Redundant lines Per Method: ");
+        int meth3 = sc.nextInt();
+        int lpm3 = sc.nextInt();
+        int rlpm3 = sc.nextInt();
+        
+        CodeFactory codef = new CodeFactory();
+        Code code1 = codef.createCode(meth1);
+        Code code2 = codef.createCode(meth2, lpm2);
+        Code code3 = codef.createCode(meth3, lpm3, rlpm3);
+        
+        System.out.println("Lines of Code: " + code1.getLinesOfCode());
+        System.out.println("Lines of Code: " + code2.getLinesOfCode());
+        System.out.println("Lines of Code: " + code3.getLinesOfCode());
+        
+    }
+    
+}
