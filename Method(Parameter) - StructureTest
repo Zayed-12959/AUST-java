@@ -1,0 +1,79 @@
+public class Structure {
+    private double structureVolume;
+    
+    double getStructureVolume(){
+        return structureVolume;
+    }
+    
+    void setStructureVolume(double structureVolume){
+        if(structureVolume<0){
+            this.structureVolume = structureVolume*(-1);
+        }
+        else{
+            this.structureVolume = structureVolume;
+        }
+    }
+    
+    Structure(double structureVolume){
+        setStructureVolume(structureVolume);
+    }
+        
+}
+
+public class DevelopStructure {
+    
+    Structure produceStructure(double radius){
+        Structure struct = new Structure(radius);
+        
+        struct.setStructureVolume((4.00/3.00)*Math.PI*Math.pow(radius, 2));
+        
+        return struct;
+    }
+    
+    Structure produceStructure(double radius, double height){
+        Structure struct = new Structure(radius);
+        
+        struct.setStructureVolume((1.00/3.00)*Math.PI*Math.pow(radius, 2)*height);
+        
+        return struct;
+    }
+    
+    Structure produceStructure(double base, double height, double length){
+        Structure struct = new Structure(base);
+        
+        struct.setStructureVolume((1.00/2.00)*(base*height)*length);
+        
+        return struct;
+    }
+}
+import java.util.Scanner;
+public class StructureTest {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Input Radius:");
+        double rad1 = sc.nextDouble();
+        System.out.println("Input Radius and Height: ");
+        double rad2 = sc.nextDouble();
+        double height2 = sc.nextDouble();
+        System.out.println("Input Base, Height and Radius: ");
+        double base3 = sc.nextDouble();
+        double height3 = sc.nextDouble();
+        double rad3 = sc.nextDouble();
+        
+        DevelopStructure dev = new DevelopStructure();
+        Structure st1 = dev.produceStructure(rad1);
+        Structure st2 = dev.produceStructure(rad2, height2);
+        Structure st3 = dev.produceStructure(base3, height3, rad3);
+        
+        System.out.println("Volume: " + st1.getStructureVolume());
+        System.out.println("Volume: " + st2.getStructureVolume());
+        System.out.println("Volume: " + st3.getStructureVolume());
+        
+    }
+    
+}
