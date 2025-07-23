@@ -1,0 +1,114 @@
+public class Book {
+    private int bookId;
+    private String title;
+    private double price;
+    
+    public static int totalBooksCreated = 0;
+    
+    int getBookId(){
+        return bookId;
+    }
+    void setBookId(int bookId){
+        this.bookId = bookId;
+    }
+    
+    String getTitle(){
+        return title;
+    }
+    void setTitle(String title){
+        this.title = title;
+    }
+    
+    double getPrice(){
+        return price;
+    }
+    void setPrice(double price){
+        this.price = price;
+    }
+    
+    Book(int bookId, String title, double price){
+        setBookId(bookId);
+        setTitle(title);
+        setPrice(price);
+        totalBooksCreated++;
+    }
+    
+    void printDetails(){
+        System.out.println(getBookId() + " " + getTitle() + " " + getPrice());
+    }
+}
+
+public class BookHelper {
+    
+    public static int[] filterByPrice(Book[] books, double price){
+        
+        int count = 0;
+        
+        for(int i=0; i<books.length; i++){
+            if(books[i].getPrice() < price){
+                count++;
+            }
+        }
+        
+        int[] id = new int[count];
+        
+        int index = 0;
+        for(int i=0; i<books.length; i++){
+            if(books[i].getPrice() < price){
+                id[index] = books[i].getBookId();
+                index++;
+            }
+        }
+        
+        return id;
+    }
+    
+    public static void printAllBooks(Book[] books){
+        for(int i=0; i<books.length; i++){
+            books[i].printDetails();
+        }
+    }
+    
+}
+
+import java.util.Scanner;
+public class LibraryManager {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Number of books: ");
+        int n = sc.nextInt();
+        
+        Book[] books = new Book[n]; //object of Book
+        for(int i=0; i<books.length; i++){
+            System.out.println("Book " + (i+1) + " id: ");
+            int id = sc.nextInt();
+            sc.nextLine();
+            System.out.println("Book " + (i+1) + " title: ");
+            String title = sc.nextLine();
+            System.out.println("Book " + (i+1) + " price: ");
+            double price = sc.nextDouble();
+            
+            books[i] = new Book(id, title, price);
+        }
+        
+        System.out.println("Filter Price: "); //understand from question
+        double filterPrice = sc.nextDouble();
+        
+        BookHelper helper = new BookHelper(); //object of BookHelper
+        int[] idFiltered = helper.filterByPrice(books, filterPrice);
+        
+        for(int i=0; i<idFiltered.length; i++){
+            System.out.println(idFiltered[i]);
+        }
+        
+        helper.printAllBooks(books);//Direct class can be useed before . too 
+        
+        System.out.println("Total books Created " + Book.totalBooksCreated);
+    }
+    
+}
