@@ -1,0 +1,108 @@
+public class Employee {
+    private String name;
+    private int id;
+    private double salary;
+    
+    Employee(){
+        
+    }
+    Employee(String name, int id, double salary){
+        setName(name);
+        setId(id);
+        setSalary(salary);
+    }
+    
+    String getName(){
+        return name;
+    }
+    void setName(String name){
+        this.name = name;
+    }
+    int getId(){
+        return id;
+    }
+    void setId(int id){
+        this.id = id;
+    }
+    double getSalary(){
+        return salary;
+    }
+    void setSalary(double salary){
+        this.salary = salary;
+    }
+}
+
+public class EmployeeManager {
+    
+    static int[] filterEmployeeBySalary(Employee[] employee, double salary){
+        
+        int count = 0;
+        
+        for(int i=0; i<employee.length; i++){
+            if(employee[i].getSalary()>salary){
+                count++;
+            }
+        }
+        
+        int index = 0;
+        int[] id = new int[count];
+        
+        for(int i=0; i<employee.length; i++){
+            if(employee[i].getSalary()>salary){
+                id[index] = employee[i].getId();
+                index++;
+            }
+        }
+        
+        return id;
+    }
+}
+
+import java.util.Scanner;
+public class EmployeeManagement {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter the number of employees: ");
+        int n = sc.nextInt();
+        sc.nextLine();
+        
+        Employee[] emp = new Employee[n];
+        
+        for(int i=0; i<emp.length; i++){
+            
+            System.out.println("Enter details of Employee " + (i+1) + ":");
+            
+            System.out.println("Name:");
+            String name = sc.nextLine();
+            System.out.println("ID:");
+            int id = sc.nextInt();
+            System.out.println("Salary:");
+            double salary = sc.nextDouble();
+            sc.nextLine();
+            
+            emp[i] = new Employee(name, id, salary);
+        }
+        
+        System.out.print("Enter salary threshold: ");
+        double threshold = sc.nextDouble();
+        
+        int[] filteredId = EmployeeManager.filterEmployeeBySalary(emp, threshold);
+        
+        if(filteredId.length > 0){
+            System.out.println("Employee IDs with salary above " + threshold + ":");
+            for (int i = 0; i < filteredId.length; i++) {
+                System.out.println(filteredId[i]);
+            }
+        } 
+        else{
+            System.out.println("No employees found with salary above " + threshold);
+        }
+        
+    }
+    
+}
