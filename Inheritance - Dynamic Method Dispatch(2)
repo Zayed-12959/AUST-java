@@ -1,0 +1,53 @@
+	class Bank{
+			private String bank_name;
+			private double rate;
+
+			Bank(String bank_name, double rate){
+					this.bank_name = bank_name;
+					this.rate = rate;
+			}
+
+			String getBankName(){
+					return this.bank_name;
+			}
+			double getBankRate(){
+					return this.rate;
+			}
+
+
+			void whichBankMakesBiggestInteres(Bank b1, Bank b2){
+					if(b1.getBankRate() > b2.getBankRate()){
+							sout(b1.getBankName());					
+					}
+					else{
+							sout(b2.getBankName());
+					}
+			}
+	}
+
+
+	class OneBank extends Bank{
+			OneBank(String bank_name, double rate){
+					super(bank_name,rate);
+			}
+	}
+
+	class CityBank extends Bank{
+			CityBank(String bank_name, double rate){
+					super(bank_name,rate);
+			}
+	}
+
+
+	class Demo{
+			public static void main(String args[]){
+					OneBank a = new OneBank("One Bank",10.0);
+					CityBank b = new CityBank("City Bank",10.0);
+
+					Bank b1 = a;
+					Bank b2 = b;
+
+					Bank.whichBankMakesBiggestInteres(b1, b2);
+			}
+	}
+
