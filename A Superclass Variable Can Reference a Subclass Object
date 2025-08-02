@@ -1,0 +1,49 @@
+public class Car extends Vehicle {
+    void drive(){
+        
+    }
+    
+    void givingTurnSignal(){
+        
+    }
+}
+
+
+public class ElectricCar extends Vehicle {
+    void drive(){
+        
+    }
+    
+    void displayInfo(){
+        
+    }
+}
+
+
+public class Vehicle {
+
+    void drive(){
+        
+    }
+    
+    public static void main(String[] args) {
+        
+        Vehicle v;
+        Car c = new Car();
+        ElectricCar ec = new ElectricCar();
+        
+        v = c;
+        v.drive();
+        v.givingTurnSignal(); // wont work - not an overriden method
+        
+        v = ec;
+        v.drive();
+        v.displayInfo(); // wont work - not an overriden method
+        
+        //not possible - subclass object cannot reference a super class variable
+        c = v;
+        ec = v;
+        
+    }
+    
+}
