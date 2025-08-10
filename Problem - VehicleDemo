@@ -1,0 +1,124 @@
+Create a superclass named “vehicle” which has
+three instance variable, ‘speed’, ‘color’, ‘weight’.
+Use Parameterized constructor to initialized
+instance variables. Now provide two subclasses
+named “Car” and “Boat” that inherits “vehicle”
+class. ‘Car’ has additional attributes like
+‘number_of_wheel’, ‘number_of_door’ etc. And
+‘Boat’ has also some specific attribute like
+‘number_of_sail’, ‘number_of_scull’ etc. Use
+keyword ‘super’ in the subclass constructor. Write
+a class “TestInheritance” to demonstrate the
+capabilities of inheritance.
+
+// Abstract superclass: Vehicle (Abstraction + Encapsulation + Inheritance)
+abstract class Vehicle {
+    // Encapsulation: private/protected attributes
+    private double speed;
+    private String color;
+    private double weight;
+
+    // Constructor
+    public Vehicle(double speed, String color, double weight) {
+        this.speed = speed;
+        this.color = color;
+        this.weight = weight;
+    }
+
+    // Getters & Setters (Encapsulation)
+    public double getSpeed() { return speed; }
+    public void setSpeed(double speed) { this.speed = speed; }
+
+    public String getColor() { return color; }
+    public void setColor(String color) { this.color = color; }
+
+    public double getWeight() { return weight; }
+    public void setWeight(double weight) { this.weight = weight; }
+
+    // Abstract method (Abstraction)
+    public abstract void displayInfo();
+}
+
+// Subclass: Car (Inheritance + Polymorphism)
+class Car extends Vehicle {
+    private int numberOfWheels;
+    private int numberOfDoors;
+
+    public Car(double speed, String color, double weight, int numberOfWheels, int numberOfDoors) {
+        super(speed, color, weight); // Calls Vehicle constructor
+        this.numberOfWheels = numberOfWheels;
+        this.numberOfDoors = numberOfDoors;
+    }
+
+    // Getters & Setters
+    public int getNumberOfWheels() { return numberOfWheels; }
+    public void setNumberOfWheels(int numberOfWheels) { this.numberOfWheels = numberOfWheels; }
+
+    public int getNumberOfDoors() { return numberOfDoors; }
+    public void setNumberOfDoors(int numberOfDoors) { this.numberOfDoors = numberOfDoors; }
+
+    // Overridden method (Polymorphism)
+    @Override
+    public void displayInfo() {
+        System.out.println("Car Details:");
+        System.out.println("Speed: " + getSpeed() + " km/h");
+        System.out.println("Color: " + getColor());
+        System.out.println("Weight: " + getWeight() + " kg");
+        System.out.println("Number of Wheels: " + numberOfWheels);
+        System.out.println("Number of Doors: " + numberOfDoors);
+        System.out.println("--------------------------------");
+    }
+}
+
+// Subclass: Boat (Inheritance + Polymorphism)
+class Boat extends Vehicle {
+    private int numberOfSails;
+    private int numberOfSculls;
+
+    public Boat(double speed, String color, double weight, int numberOfSails, int numberOfSculls) {
+        super(speed, color, weight); // Calls Vehicle constructor
+        this.numberOfSails = numberOfSails;
+        this.numberOfSculls = numberOfSculls;
+    }
+
+    // Getters & Setters
+    public int getNumberOfSails() { return numberOfSails; }
+    public void setNumberOfSails(int numberOfSails) { this.numberOfSails = numberOfSails; }
+
+    public int getNumberOfSculls() { return numberOfSculls; }
+    public void setNumberOfSculls(int numberOfSculls) { this.numberOfSculls = numberOfSculls; }
+
+    // Overridden method (Polymorphism)
+    @Override
+    public void displayInfo() {
+        System.out.println("Boat Details:");
+        System.out.println("Speed: " + getSpeed() + " km/h");
+        System.out.println("Color: " + getColor());
+        System.out.println("Weight: " + getWeight() + " kg");
+        System.out.println("Number of Sails: " + numberOfSails);
+        System.out.println("Number of Sculls: " + numberOfSculls);
+        System.out.println("--------------------------------");
+    }
+}
+
+// Test class (Demonstrates all OOP principles)
+class TestInheritance {
+    public static void main(String[] args) {
+//        // Runtime Polymorphism: Using Vehicle reference
+//        Vehicle myCar = new Car(180, "Red", 1200, 4, 4);
+//        Vehicle myBoat = new Boat(60, "White", 800, 2, 6);
+//
+//        // Array of Vehicles (Polymorphism)
+//        Vehicle[] vehicles = {myCar, myBoat};
+
+        Vehicle[] vehicles  = {
+                new Car(180, "Red", 1200, 4, 4),
+                new Boat(60, "White", 800, 2, 6)
+        };
+
+        // Loop through and call overridden methods
+        for(int i=0; i< vehicles.length; i++){
+            vehicles[i].displayInfo();
+        }
+    }
+}
