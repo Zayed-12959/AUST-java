@@ -1,0 +1,224 @@
+abstract class Student {
+	String name;
+	double totalCPGA;
+
+	public Student(String name, double totalCPGA) {
+		super();
+		this.name = name;
+		this.totalCPGA = totalCPGA;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public double getTotalCPGA() {
+		return totalCPGA;
+	}
+
+	abstract double calculateCGPA() ;
+	
+	/*double calculateCGPA() { 
+		return -1;
+	}*/
+
+	public static String compareStudent(Student s1, Student s2) {
+		String name = "";
+		if (s1.calculateCGPA() < s2.calculateCGPA()) {
+			name = s2.getName();
+		} else {
+			name = s1.getName();
+		}
+		return name;
+	}
+}
+
+class CSEStudent extends Student {
+
+	public CSEStudent(String name, double totalCPGA) {
+		super(name, totalCPGA);
+	}
+
+	double calculateCGPA() {
+		return super.getTotalCPGA() / 141.5;
+	}
+	
+	
+
+}
+
+class ARCHStudent extends Student {
+
+	public ARCHStudent(String name, double totalCPGA) {
+		super(name, totalCPGA);
+	}
+
+	double calculateCGPA() {
+		return super.getTotalCPGA() / 152.5;
+	}
+
+}
+		
+ class EEEStudent extends Student{
+	 
+	 public EEEStudent(String name, double totalCPGA) {
+			super(name, totalCPGA);
+		}
+
+		double calculateCGPA() {
+			return super.getTotalCPGA() / 157.0;
+		}
+ }
+
+ 
+ 
+public class DynamicMethodDispatchAbstractClass {
+	public static void main(String args[]){
+		//CSEStudent cs1 = new CSEStudent("Rahim", 240.5);
+		
+		CSEStudent cs1 = new CSEStudent("Rahim", 240.5);
+		ARCHStudent as1 = new ARCHStudent("Karim", 255.5);
+		
+		System.out.println(Student.compareStudent(cs1, as1));
+	}
+}
+
+class Bank{
+	private double interestRate;
+	private String bankName;
+	
+	public Bank(String bankName, double interestRate) {
+		super();
+		this.bankName = bankName;
+		this.interestRate = interestRate;
+	}
+		
+	public double getInterestRate() {
+		return interestRate;
+	}
+
+	public void setInterestRate(double interestRate) {
+		this.interestRate = interestRate;
+	}
+
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+	
+	static String whoHasHeightestInterest(Bank b1, Bank b2){
+		String bankName="";
+		
+		if(b1.getInterestRate() >= b2.getInterestRate()){
+			bankName=b1.getBankName();
+		}else{
+			bankName=b2.getBankName();	
+		}
+		
+		return bankName;
+	}
+	
+	
+	
+	
+}
+
+
+class OneBank extends Bank{
+
+	public OneBank(String bankName, double interestRate) {
+		super(bankName, interestRate);
+	}
+	
+		
+	//own attributes
+}
+
+class BracBank extends Bank{
+
+	public BracBank(String bankName, double interestRate) {
+		super(bankName, interestRate);
+	}
+
+}
+
+class DauchBanglaBank extends Bank{
+	public DauchBanglaBank(String bankName, double interestRate) {
+		super(bankName, interestRate);
+	}
+}
+
+
+class XBank extends Bank{
+	public XBank(String bankName, double interestRate) {
+		super(bankName, interestRate);
+	}
+}
+//whoHasHeightestInterest
+
+public class DynamicMethodDispatchDemo {
+	public static void main(String args[]){
+		OneBank ob = new OneBank("One Bank Ltd", 7 );
+		BracBank bb = new BracBank("Brac bank Ltd", 6.5);
+		XBank x = new XBank("X abnk", 9);
+		
+		System.out.println(Bank.whoHasHeightestInterest(ob,x));
+
+		DauchBanglaBank dbb = new DauchBanglaBank("Dauch Bangla Bank", 8);
+		
+		System.out.println(Bank.whoHasHeightestInterest(dbb,ob));
+		System.out.println(Bank.whoHasHeightestInterest(bb,dbb));
+		
+		
+		
+	}
+	
+}
+
+class Vehicle{
+	void drive() {
+		System.out.println("drive method From Vehicle class");
+	}
+	void givingTurnSignal() {
+		System.out.println("Giving trun signal from vehicle class");
+	}
+}
+class Car extends Vehicle{
+	void drive() {
+		System.out.println("drive method From Car class");
+	}
+	void givingTurnSignal() {
+		System.out.println("Giving trun signal from car class");
+	}
+}
+
+class ElectricCar extends Car{
+	void drive() {
+		System.out.println("drive method From Electric car class");
+	}
+	void displayInfo() {
+		System.out.println("displayInfo method From Electric car class");
+	}
+}
+
+public class TestSuperReferenceDemo {
+
+	public static void main(String[] args) {
+		Car c = new Car();
+		ElectricCar ec = new ElectricCar();
+		
+		Vehicle v;
+		v = c;
+		v.drive();
+		//v.givingTurnSignal();
+		
+		v=ec;
+		v.drive();
+		//v.displayInfo();
+
+	}
+
+}
