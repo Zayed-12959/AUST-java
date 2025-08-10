@@ -1,0 +1,1004 @@
+// Abstract base class
+abstract class Fan {
+    protected String brand;
+    protected int speed;
+
+    public Fan(String brand) {
+        this.brand = brand;
+        this.speed = 0;
+    }
+
+    public void turnOn() {
+        System.out.println(brand + " fan is turned ON.");
+    }
+
+    public void turnOff() {
+        System.out.println(brand + " fan is turned OFF.");
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+        System.out.println(brand + " fan speed set to " + speed);
+    }
+
+    public abstract void displayInfo();
+}
+
+// Interface for remote-controllable fans
+interface RemoteControllable {
+    void useRemoteControl();
+}
+
+// CeilingFan class (supports remote)
+class CeilingFan extends Fan implements RemoteControllable {
+    public CeilingFan(String brand) {
+        super(brand);
+    }
+
+    public void useRemoteControl() {
+        System.out.println(brand + " ceiling fan is controlled using a remote.");
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Ceiling fan brand: " + brand);
+    }
+}
+
+// DeskFan class (basic)
+class DeskFan extends Fan {
+    public DeskFan(String brand) {
+        super(brand);
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Desk fan brand: " + brand);
+    }
+}
+
+// Abstract class for StandFans
+abstract class StandFan extends Fan {
+    public StandFan(String brand) {
+        super(brand);
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Stand fan brand: " + brand);
+    }
+}
+
+// TowerFan (StandFan, remote, height adjustable)
+class TowerFan extends StandFan implements RemoteControllable {
+    public TowerFan(String brand) {
+        super(brand);
+    }
+
+    public void adjustHeight(int height) {
+        System.out.println(brand + " tower fan height adjusted to " + height + " cm.");
+    }
+
+    public void useRemoteControl() {
+        System.out.println(brand + " tower fan is controlled using a remote.");
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Tower fan brand: " + brand);
+    }
+}
+
+// PedestalFan (StandFan, height adjustable)
+class PedestalFan extends StandFan {
+    public PedestalFan(String brand) {
+        super(brand);
+    }
+
+    public void adjustHeight(int height) {
+        System.out.println(brand + " pedestal fan height adjusted to " + height + " cm.");
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println("Pedestal fan brand: " + brand);
+    }
+}
+
+// Main class to demonstrate functionality
+public class FanDemo {
+    public static void main(String[] args) {
+        // Create an array of Fan references (dynamic method dispatch)
+        Fan[] fans = new Fan[4];
+        fans[0] = new CeilingFan("SuperCool");
+        fans[1] = new DeskFan("MiniBreeze");
+        fans[2] = new TowerFan("WindMax");
+        fans[3] = new PedestalFan("AirStand");
+
+        // Use standard for loop to demonstrate all features
+        for (int i = 0; i < fans.length; i++) {
+            System.out.println("=== " + fans[i].getClass().getSimpleName() + " ===");
+
+            fans[i].turnOn();              // Inherited method
+            fans[i].setSpeed(3);           // Inherited method
+            fans[i].displayInfo();         // Dynamic method dispatch
+
+            // Interface check for remote control
+            if (fans[i] instanceof RemoteControllable) {
+                ((RemoteControllable) fans[i]).useRemoteControl();
+            }
+
+            // Check for height adjustable fans
+            if (fans[i] instanceof TowerFan) {
+                ((TowerFan) fans[i]).adjustHeight(120);
+            } else if (fans[i] instanceof PedestalFan) {
+                ((PedestalFan) fans[i]).adjustHeight(130);
+            }
+
+            System.out.println();
+        }
+    }
+}
+
+
+class Driver {
+    // Instance variables
+    private String name;
+    private String licenseNo;
+    private double salary;
+
+    // Constructor
+    public Driver(String name, String licenseNo, double salary) {
+        this.name = name;
+        this.licenseNo = licenseNo;
+        this.salary = salary;
+    }
+
+    // Overriding toString() method to print object nicely
+    @Override
+    public String toString() {
+        return "Name: " + name + ", License No: " + licenseNo + ", Salary: " + salary;
+    }
+
+    // Optional: Getters (if needed)
+    public String getName() {
+        return name;
+    }
+
+    public String getLicenseNo() {
+        return licenseNo;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Driver d = new Driver("Hasan Ali", "LIC12345", 25000.0);
+        System.out.println(d); // Automatically calls d.toString()
+    }
+}
+
+
+class Account {
+    private String mobileNumber;   // Acts as account number
+    private double balance;
+
+    // Constructor
+    public Account(String mobileNumber, double initialBalance) {
+        this.mobileNumber = mobileNumber;
+        this.balance = initialBalance;
+    }
+
+    // Getter for mobile number
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
+
+    // Getter for balance (no setter to protect direct balance changes)
+    public double getBalance() {
+        return balance;
+    }
+
+    // Method to receive money
+    public void receiveMoney(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println("Received " + amount + " Taka. New balance: " + balance);
+        } else {
+            System.out.println("Invalid amount to receive.");
+        }
+    }
+
+    // Method to send money
+    public boolean sendMoney(Account recipient, double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            recipient.receiveMoney(amount);
+            System.out.println("Sent " + amount + " Taka to " + recipient.getMobileNumber());
+            return true;
+        } else {
+            System.out.println("Failed to send money. Insufficient balance or invalid amount.");
+            return false;
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Account a1 = new Account("01711112222", 5000);
+        Account a2 = new Account("01888889999", 2000);
+
+        // Transfer money
+        a1.sendMoney(a2, 1500);
+
+        // Check balances
+        System.out.println("A1 Balance: " + a1.getBalance());
+        System.out.println("A2 Balance: " + a2.getBalance());
+    }
+}
+
+
+// Abstract base class - Abstraction
+abstract class SpeedCalculator {
+    protected double averageSpeed;
+
+    // Abstract method - must be implemented by subclasses
+    public abstract void calculateAverageSpeed();
+
+    public double getAverageSpeed() {
+        return averageSpeed;
+    }
+}
+
+// Concrete subclass for Vehicle - Inheritance + Polymorphism
+class Vehicle extends SpeedCalculator {
+    private double totalDistance;
+    private double totalTime;
+    private double[] speedList;
+    private boolean useListBased;
+
+    // Constructor 1: Distance & Time method
+    public Vehicle(double totalDistance, double totalTime) {
+        this.totalDistance = totalDistance;
+        this.totalTime = totalTime;
+        this.useListBased = false;
+    }
+
+    // Constructor 2: List of speeds
+    public Vehicle(double[] speedList) {
+        this.speedList = speedList;
+        this.useListBased = true;
+    }
+
+    // Overriding the abstract method - Polymorphism
+    @Override
+    public void calculateAverageSpeed() {
+        if (useListBased) {
+            double sum = 0;
+            for (int i = 0; i < speedList.length; i++) {
+                sum += speedList[i];
+            }
+            if(speedList.length>0){
+                averageSpeed = sum/speedList.length;
+            }
+            else{
+                averageSpeed = 0;
+            }
+        } else {
+            if (totalTime != 0)
+                averageSpeed = totalDistance / totalTime;
+            else
+                averageSpeed = 0;
+        }
+    }
+}
+
+// Demo class - Testing both methods
+public class Main {
+    public static void main(String[] args) {
+        // Using distance & time
+        SpeedCalculator vehicle1 = new Vehicle(150.0, 3.0); // 150 km in 3 hours
+        vehicle1.calculateAverageSpeed();
+        System.out.println("Average speed using distance & time: " + vehicle1.getAverageSpeed() + " km/h");
+
+        // Using speed list
+        double[] speeds = { 50.0, 60.0, 55.0, 65.0 };
+        SpeedCalculator vehicle2 = new Vehicle(speeds);
+        vehicle2.calculateAverageSpeed();
+        System.out.println("Average speed from list: " + vehicle2.getAverageSpeed() + " km/h");
+    }
+}
+
+
+class Student {
+    String name;
+    String dob;
+    String id;
+
+    // Parameterized constructor
+    public Student(String name, String dob, String id) {
+        this.name = name;
+        this.dob = dob;
+        this.id = id;
+    }
+
+    // Copy constructor
+    public Student(Student other) {
+        this.name = other.name;
+        this.dob = other.dob;
+        this.id = other.id;
+    }
+
+    // Overriding equals method to compare values
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+
+        Student s = (Student) o;
+        return this.name.equals(s.name) &&
+                this.dob.equals(s.dob) &&
+                this.id.equals(s.id);
+    }
+}
+
+public class StudentDemo {
+    public static void main(String[] args) {
+        Student s1 = new Student("Abdul Karim", "02-11-2003", "20200204003");
+        Student s2 = new Student(s1); // Create a new object with same data
+
+        // Value comparison using equals
+        System.out.println("Before assignment:");
+        System.out.println("s1.equals(s2)? " + s1.equals(s2)); // true
+        System.out.println("s1 == s2? " + (s1 == s2));           // false
+
+        // Now assign s1 to s2
+        s1 = s2;
+
+        System.out.println("\nAfter assignment (s1 = s2):");
+        System.out.println("s1.equals(s2)? " + s1.equals(s2)); // true
+        System.out.println("s1 == s2? " + (s1 == s2));           // true
+
+        // Change value through s1
+        s1.name = "Changed Name";
+        System.out.println("\ns2.name after changing s1.name: " + s2.name); // Changed Name
+    }
+}
+
+
+// Abstract superclass - Abstraction
+abstract class Furniture {
+    protected double height;
+
+    public Furniture(double height) {
+        this.height = height;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    // Abstract method for polymorphism
+    public abstract String describe();
+}
+
+// Subclass - Inheritance + Encapsulation
+class Table extends Furniture {
+    private double topLength;
+    private double topWidth;
+
+    // Constructor with dimensions
+    public Table(double topLength, double topWidth, double height) {
+        super(height);
+        this.topLength = topLength;
+        this.topWidth = topWidth;
+    }
+
+    // Copy constructor
+    public Table(Table other) {
+        this(other.topLength, other.topWidth, other.height);
+    }
+
+    // Getters (Encapsulation)
+    public double getTopLength() {
+        return topLength;
+    }
+
+    public double getTopWidth() {
+        return topWidth;
+    }
+
+    // Overridden method for polymorphism
+    @Override
+    public String describe() {
+        return "Table [Length: " + topLength + ", Width: " + topWidth + ", Height: " + height + "]";
+    }
+}
+
+// Carpenter class - uses method overloading and polymorphism
+class Carpenter {
+
+    // Overloaded method 1: make table using dimensions
+    public Furniture makeTable(double length, double width, double height) {
+        return new Table(length, width, height); // upcasting to Furniture
+    }
+
+    // Overloaded method 2: make a copy of an existing table
+    public Furniture makeTable(Table existingTable) {
+        return new Table(existingTable); // upcasting to Furniture
+    }
+}
+
+// Demo class to test the behavior
+public class Main {
+    public static void main(String[] args) {
+        Carpenter carpenter = new Carpenter();
+
+        // Make a table by dimensions (dynamic method dispatch)
+        Furniture table1 = carpenter.makeTable(6.0, 3.5, 2.5);
+        System.out.println("Original Table: " + table1.describe());
+
+        // Make a copy of the existing table
+        Furniture table2 = carpenter.makeTable((Table) table1);
+        System.out.println("Copied Table: " + table2.describe());
+    }
+}
+
+
+// Abstract class - Abstraction
+abstract class AbstractTV {
+    protected int screenSize;
+    protected String aspectRatio;
+    protected String resolution;
+    protected int currentChannel = 1;
+    protected int brightness = 50;
+
+    public AbstractTV(int screenSize, String aspectRatio, String resolution) {
+        this.screenSize = screenSize;
+        this.aspectRatio = aspectRatio;
+        this.resolution = resolution;
+    }
+
+    // Abstract methods to be overridden - Polymorphism
+    public abstract void changeChannel(int newChannel);
+    public abstract void increaseBrightness();
+}
+
+// GeneralTV class - Inheritance
+class GeneralTV extends AbstractTV {
+
+    public GeneralTV(int screenSize, String aspectRatio, String resolution) {
+        super(screenSize, aspectRatio, resolution);
+    }
+
+    @Override
+    public void changeChannel(int newChannel) {
+        currentChannel = newChannel;
+        System.out.println("Channel: " + currentChannel);
+    }
+
+    @Override
+    public void increaseBrightness() {
+        brightness += 10;
+        System.out.println("Brightness increased to " + brightness);
+    }
+}
+
+// SmartTV class - Inheritance + Polymorphism
+class SmartTV extends AbstractTV {
+
+    public SmartTV(int screenSize, String aspectRatio, String resolution) {
+        super(screenSize, aspectRatio, resolution);
+    }
+
+    @Override
+    public void changeChannel(int newChannel) {
+        currentChannel = newChannel;
+        System.out.println("Showing Channel number " + currentChannel);
+    }
+
+    @Override
+    public void increaseBrightness() {
+        brightness += 10;
+        System.out.println("Smart TV Brightness set to " + brightness);
+    }
+
+    // Smart TV extra feature
+    public void runYouTubeApp() {
+        System.out.println("Running YouTube App...");
+    }
+}
+
+// Demo class
+public class Main {
+    public static void main(String[] args) {
+        // Dynamic method dispatch
+        AbstractTV tv1 = new GeneralTV(32, "16:9", "1080p");
+        AbstractTV tv2 = new SmartTV(55, "16:9", "4K");
+
+        System.out.println("General TV:");
+        tv1.changeChannel(5);
+        tv1.increaseBrightness();
+
+        System.out.println("\nSmart TV:");
+        tv2.changeChannel(10);
+        tv2.increaseBrightness();
+
+        // Type casting to access SmartTV specific features
+        if (tv2 instanceof SmartTV) {
+            ((SmartTV) tv2).runYouTubeApp();
+        }
+    }
+}
+
+
+// Abstract base class representing a generic person
+abstract class Person {
+    protected String name;
+    protected int distance; // in kilometers
+    protected final int farePerKm = 1; // Constant fare rate
+
+    public Person(String name, int distance) {
+        this.name = name;
+        this.distance = distance;
+    }
+
+    // Abstract method to be overridden by all subclasses
+    public abstract double calculateFare();
+
+    // Common method to display the final fare
+    public void showFare() {
+        System.out.println(name + " has to pay: " + calculateFare() + " taka");
+    }
+}
+
+// Subclass representing a Student (gets 30% discount)
+class Student extends Person {
+    public Student(String name, int distance) {
+        super(name, distance);
+    }
+
+    @Override
+    public double calculateFare() {
+        return distance * farePerKm * 0.7; // 30% discount
+    }
+}
+
+// Subclass representing a Doctor (gets 15% discount)
+class Doctor extends Person {
+    public Doctor(String name, int distance) {
+        super(name, distance);
+    }
+
+    @Override
+    public double calculateFare() {
+        return distance * farePerKm * 0.85; // 15% discount
+    }
+}
+
+// Subclass representing a GeneralPerson (no discount)
+class GeneralPerson extends Person {
+    public GeneralPerson(String name, int distance) {
+        super(name, distance);
+    }
+
+    @Override
+    public double calculateFare() {
+        return distance * farePerKm; // No discount
+    }
+}
+
+public class FareCalculator {
+    public static void main(String[] args) {
+        // Using abstract class reference to hold different types of objects
+        Person[] passengers = new Person[4];
+
+        // Dynamic method dispatch: subclass objects assigned to superclass references
+        passengers[0] = new Student("Alice", 10);
+        passengers[1] = new Doctor("Dr. Karim", 20);
+        passengers[2] = new GeneralPerson("Mr. Rahman", 15);
+        passengers[3] = new Student("Bob", 25); // Another student for variety
+
+        // Loop using standard for loop (not enhanced for-each)
+        for (int i = 0; i < passengers.length; i++) {
+            passengers[i].showFare(); // Polymorphism in action
+        }
+    }
+}
+
+
+// Custom Exceptions
+class CreditLimitExceededException extends Exception {
+    public CreditLimitExceededException(String message) {
+        super(message);
+    }
+}
+
+class TransactionLimitExceededException extends Exception {
+    public TransactionLimitExceededException(String message) {
+        super(message);
+    }
+}
+
+// Abstract class - Abstraction
+abstract class BankAccount {
+    private String accountNo;
+    protected String accountType;
+    protected double balance;
+    protected double creditLimit;
+    protected int transactionsAllowed;
+
+    public BankAccount(String accountNo, double balance) {
+        this.accountNo = accountNo;
+        this.balance = balance;
+        setCardDetails();
+    }
+
+    protected abstract void setCardDetails(); // Must be defined in child classes
+
+    public void useCard(double amount) throws CreditLimitExceededException, TransactionLimitExceededException {
+        if (transactionsAllowed <= 0) {
+            throw new TransactionLimitExceededException("Transaction limit exceeded!");
+        }
+        if (amount > creditLimit) {
+            throw new CreditLimitExceededException("Credit limit exceeded!");
+        }
+
+        creditLimit -= amount;
+        transactionsAllowed--;
+
+        System.out.println("Transaction successful! Remaining credit: Tk. " + creditLimit
+                + ", Remaining transactions: " + transactionsAllowed);
+    }
+
+    public void showDetails() {
+        System.out.println("Account No: " + accountNo);
+        System.out.println("Account Type: " + accountType);
+        System.out.println("Balance: Tk. " + balance);
+        System.out.println("Credit Limit: Tk. " + creditLimit);
+        System.out.println("Transactions Allowed: " + transactionsAllowed);
+    }
+}
+
+// Silver Account
+class SilverAccount extends BankAccount {
+    public SilverAccount(String accountNo, double balance) {
+        super(accountNo, balance);
+        this.accountType = "Silver";
+    }
+
+    @Override
+    protected void setCardDetails() {
+        creditLimit = 50000;
+        transactionsAllowed = 10;
+    }
+}
+
+// Gold Account
+class GoldAccount extends BankAccount {
+    public GoldAccount(String accountNo, double balance) {
+        super(accountNo, balance);
+        this.accountType = "Gold";
+    }
+
+    @Override
+    protected void setCardDetails() {
+        creditLimit = 75000;
+        transactionsAllowed = 15;
+    }
+}
+
+// Platinum Account
+class PlatinumAccount extends BankAccount {
+    public PlatinumAccount(String accountNo, double balance) {
+        super(accountNo, balance);
+        this.accountType = "Platinum";
+    }
+
+    @Override
+    protected void setCardDetails() {
+        creditLimit = 100000;
+        transactionsAllowed = 20;
+    }
+}
+
+// Main Class - Demo
+public class Main {
+    public static void main(String[] args) {
+        // Using dynamic dispatch
+        BankAccount[] accounts = {
+                new SilverAccount("S-123", 10000),
+                new GoldAccount("G-456", 20000),
+                new PlatinumAccount("P-789", 50000)
+        };
+
+        for (BankAccount acc : accounts) {
+            System.out.println("----- Account Details -----");
+            acc.showDetails();
+
+            try {
+                acc.useCard(10000);  // Try a valid transaction
+                acc.useCard(50000);  // Try an invalid one (may throw exception)
+            } catch (CreditLimitExceededException | TransactionLimitExceededException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+
+            System.out.println();
+        }
+    }
+}
+
+
+// Component class
+class Component {
+    private String name;
+    private String task;
+
+    public Component(String name, String task) {
+        this.name = name;
+        this.task = task;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTask() {
+        return task;
+    }
+}
+
+// Abstract Computer class
+abstract class Computer {
+    protected String name;
+    protected double processorSpeed;
+    protected int ramSize;
+    protected double hddCapacity;
+
+    public Computer(String name, double processorSpeed, int ramSize, double hddCapacity) {
+        this.name = name;
+        this.processorSpeed = processorSpeed;
+        this.ramSize = ramSize;
+        this.hddCapacity = hddCapacity;
+    }
+
+    public void installComponent(Component c) {
+        System.out.println("Installing Component " + c.getName() + " to " + name + " computer");
+    }
+
+    public void connect(String networkType) {
+        System.out.println("Connected to a network by " + networkType);
+    }
+
+    public void compareSpeed(Computer other) {
+        if (this.processorSpeed > other.processorSpeed) {
+            System.out.println(this.name + " computer is faster than " + other.name);
+        } else if (this.processorSpeed < other.processorSpeed) {
+            System.out.println(other.name + " computer is faster than " + this.name);
+        } else {
+            System.out.println(this.name + " and " + other.name + " have the same processor speed");
+        }
+    }
+}
+
+// Desktop class
+class Desktop extends Computer {
+    public Desktop(String name, double processorSpeed, int ramSize, double hddCapacity) {
+        super(name, processorSpeed, ramSize, hddCapacity);
+    }
+}
+
+// Laptop class
+class Laptop extends Computer {
+    public Laptop(String name, double processorSpeed, int ramSize, double hddCapacity) {
+        super(name, processorSpeed, ramSize, hddCapacity);
+    }
+}
+
+// Tablet class, with extra attribute
+class Tablet extends Computer {
+    private double touchScreenSize;
+
+    public Tablet(String name, double processorSpeed, int ramSize, double hddCapacity, double touchScreenSize) {
+        super(name, processorSpeed, ramSize, hddCapacity);
+        this.touchScreenSize = touchScreenSize;
+    }
+}
+
+// Demo class to illustrate functionality
+public class Main {
+    public static void main(String[] args) {
+        Component gpu = new Component("Graphics Card", "Rendering Graphics");
+        Component printer = new Component("Printer", "Printing Documents");
+
+        Computer desktop = new Desktop("OfficeDesktop", 3.5, 16, 1000);
+        Computer laptop = new Laptop("WorkLaptop", 2.8, 8, 512);
+        Computer tablet = new Tablet("MyTablet", 2.2, 4, 256, 10.1);
+
+        // Demonstrate component installation
+        desktop.installComponent(gpu);
+        laptop.installComponent(printer);
+        tablet.installComponent(gpu);
+
+        // Demonstrate network connection
+        desktop.connect("Ethernet");
+        laptop.connect("WiFi");
+        tablet.connect("WiFi");
+
+        // Compare speeds
+        desktop.compareSpeed(laptop);
+        laptop.compareSpeed(tablet);
+
+        // Compare between others
+        tablet.compareSpeed(desktop);
+    }
+}
+
+
+class BankAccount {
+    private String accountNumber;
+    private double balance;
+
+    // Constructor
+    public BankAccount(String accountNumber, double balance) {
+        this.accountNumber = accountNumber;
+        this.balance = balance;
+    }
+
+    // Getter methods
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    // Deposit method
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+
+    // Withdraw method
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+        } else {
+            System.out.println("Insufficient balance!");
+        }
+    }
+}
+class Employee {
+    public String name;             // accessible from outside
+    public String id;               // accessible from outside
+    private double salary;          // encapsulated
+    private BankAccount account;    // encapsulated
+
+    // Constructor
+    public Employee(String name, String id, double salary, BankAccount account) {
+        this.name = name;
+        this.id = id;
+        this.salary = salary;
+        this.account = account;
+    }
+
+    // Getter for salary
+    public double getSalary() {
+        return salary;
+    }
+
+    // Setter for salary
+    public void setSalary(double salary) {
+        if (salary > 0) {
+            this.salary = salary;
+        }
+    }
+
+    // View account balance
+    public double getAccountBalance() {
+        return account.getBalance();
+    }
+
+    // Deposit into employee's account
+    public void depositToAccount(double amount) {
+        account.deposit(amount);
+    }
+
+    // Withdraw from employee's account
+    public void withdrawFromAccount(double amount) {
+        account.withdraw(amount);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        // Creating a BankAccount object
+        BankAccount bankAccount = new BankAccount("BA12345", 10000.0);
+
+        // Creating an Employee object
+        Employee emp = new Employee("Alice", "EMP001", 30000.0, bankAccount);
+
+        // Accessing public fields
+        System.out.println("Employee Name: " + emp.name);
+        System.out.println("Employee ID: " + emp.id);
+
+        // Accessing private fields via getters
+        System.out.println("Salary: " + emp.getSalary());
+        System.out.println("Initial Account Balance: " + emp.getAccountBalance());
+
+        // Performing deposit
+        emp.depositToAccount(2000.0);
+        System.out.println("After Deposit: " + emp.getAccountBalance());
+
+        // Performing withdraw
+        emp.withdrawFromAccount(1500.0);
+        System.out.println("After Withdraw: " + emp.getAccountBalance());
+
+        // Trying to directly access salary or account (not allowed)
+        // emp.salary;           ❌ ERROR
+        // emp.account.getBalance(); ❌ ERROR
+    }
+}
+
+
+tract class to represent the concept of an Employee
+abstract class Employee {
+    protected double basic;
+    protected double transportAllowance;
+    protected double medicalAllowance;
+
+    public Employee(double basic) {
+        this.basic = basic;
+    }
+
+    // Abstract method to enforce salary calculation in subclasses
+    public abstract double calculateSalary();
+
+    // Common method to display salary
+    public void displaySalary(String employeeType) {
+        System.out.println("Salary of " + employeeType + ": " + calculateSalary());
+    }
+}
+
+// General employee class
+class GeneralEmployee extends Employee {
+    public GeneralEmployee(double basic) {
+        super(basic);
+        this.transportAllowance = 0.25 * basic;
+        this.medicalAllowance = 5000;
+    }
+
+    @Override
+    public double calculateSalary() {
+        return basic + transportAllowance + medicalAllowance;
+    }
+}
+
+// Executive employee class
+class ExecutiveEmployee extends Employee {
+    public ExecutiveEmployee(double basic) {
+        super(basic);
+        this.transportAllowance = 0.55 * basic;
+        this.medicalAllowance = 9000;
+    }
+
+    @Override
+    public double calculateSalary() {
+        return basic + transportAllowance + medicalAllowance;
+    }
+}
+
+// Main class to test the system
+public class Main {
+    public static void main(String[] args) {
+        Employee general = new GeneralEmployee(12000);
+        Employee executive = new ExecutiveEmployee(12000);
+
+        general.displaySalary("General Employee");
+        executive.displaySalary("Executive Employee");
+    }
+}
+
+
