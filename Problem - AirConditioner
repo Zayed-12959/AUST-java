@@ -1,0 +1,138 @@
+abstract class AirConditioner {
+    double capacity;
+    double powerConsumption;
+    double price;
+
+    public AirConditioner(double capacity, double powerConsumption, double price) {
+        this.capacity = capacity;
+        this.powerConsumption = powerConsumption;
+        this.price = price;
+    }
+
+    abstract void controlTemperature();
+    abstract void controlSpeed();
+    abstract void info();
+
+    // Compare this AC with another AC
+    // Returns 1 if this is better, -1 if other is better, 0 if equal
+    public int compare(AirConditioner other) {
+        if (this.capacity > other.capacity) return 1;
+        if (this.capacity < other.capacity) return -1;
+
+        if (this.powerConsumption < other.powerConsumption) return 1;
+        if (this.powerConsumption > other.powerConsumption) return -1;
+
+        return 0;
+    }
+}
+
+class WindowAC extends AirConditioner {
+
+    public WindowAC(double capacity, double powerConsumption, double price) {
+        super(capacity, powerConsumption, price);
+    }
+
+    @Override
+    void controlTemperature() {
+        System.out.println("Cannot control");
+    }
+
+    @Override
+    void controlSpeed() {
+        System.out.println("Cannot control");
+    }
+
+    @Override
+    public void info() {
+        System.out.println("Affordable choice for smaller rooms and single room cooling");
+    }
+}
+
+class SplitAC extends AirConditioner {
+
+    public SplitAC(double capacity, double powerConsumption, double price) {
+        super(capacity, powerConsumption, price);
+    }
+
+    @Override
+    void controlTemperature() {
+        System.out.println("Cannot control");
+    }
+
+    @Override
+    void controlSpeed() {
+        System.out.println("Cannot control");
+    }
+
+    @Override
+    void info() {
+        System.out.println("More pricy, provides more efficient cooling for large spaces");
+    }
+}
+
+class InverterAc extends AirConditioner {
+
+    public InverterAc(double capacity, double powerConsumption, double price) {
+        super(capacity, powerConsumption, price);
+    }
+
+    @Override
+    void controlTemperature() {
+        System.out.println("Cannot control");
+    }
+
+    @Override
+    void controlSpeed() {
+        System.out.println("Cannot control");
+    }
+
+    @Override
+    void info() {
+        System.out.println("Very efficient fast cooling");
+    }
+}
+
+class smartAC extends AirConditioner {
+    public smartAC(double capacity, double powerConsumption, double price) {
+        super(capacity, powerConsumption, price);
+    }
+
+    @Override
+    void info() {
+        System.out.println("Very efficient fast cooling, speed and temp can be controlled");
+    }
+
+    @Override
+    void controlSpeed() {
+        System.out.println("Controlling the speed");
+    }
+
+    @Override
+    void controlTemperature() {
+        System.out.println("Controlling the temp");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        AirConditioner[] acs = {
+                new WindowAC(1.5, 1200, 300),
+                new SplitAC(2.0, 1500, 700),
+                new InverterAc(2.5, 1100, 900),
+                new smartAC(2.2, 1300, 1200)
+        };
+
+        AirConditioner bestAC = acs[0];
+
+        for (int i = 1; i < acs.length; i++) {
+            if (acs[i].compare(bestAC) > 0) {
+                bestAC = acs[i];
+            }
+        }
+
+        System.out.println("Best AC based on capacity and power consumption:");
+        System.out.println(bestAC.getClass().getSimpleName() +
+                " - Capacity: " + bestAC.capacity +
+                ", Power Consumption: " + bestAC.powerConsumption);
+    }
+}
