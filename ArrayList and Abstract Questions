@@ -1,0 +1,589 @@
+Q1. Project: “ZooManagementSystem”
+
+Create a class Animal
+
+Attributes: name (String), age (int)
+
+Method: makeSound() → abstract, receives nothing, returns nothing
+
+Create a class Lion (inherits Animal)
+
+Method: makeSound() → prints "Roar!"
+
+Create a class Elephant (inherits Animal)
+
+Method: makeSound() → prints "Trumpet!"
+
+Create a class ZooInventory
+
+Private & static attribute: animalsList (ArrayList of Animal)
+
+Public & static method: addAnimal(Animal a) → adds animal, prints total number
+
+Public & static method: makeAllSounds() → uses standard for loop to call makeSound()
+
+In main()
+
+Create 1 Lion and 2 Elephants
+
+Add them to inventory
+
+Call makeAllSounds()
+
+Sample Output:
+
+Number of Total Animals: 1
+Number of Total Animals: 2
+Number of Total Animals: 3
+Roar!
+Trumpet!
+Trumpet!
+
+
+import java.util.ArrayList;
+
+abstract class Animal{
+    private String name;
+    private int age;
+
+    abstract void makeSound();
+}
+
+class Lion extends Animal{
+
+    void makeSound(){
+        System.out.println("Roar!");
+    }
+}
+
+class Elephant extends Animal{
+
+    void makeSound(){
+        System.out.println("Trumpet!");
+    }
+}
+
+class ZooInventory{
+    private static ArrayList<Animal> animalsList = new ArrayList<>();
+
+    public static void addAnimal(Animal a){
+        animalsList.add(a);
+        System.out.println("Number of total animals: " + animalsList.size());
+    }
+
+    public static void makeAllSounds(){
+        for(int i=0; i< animalsList.size(); i++){
+            animalsList.get(i).makeSound();
+        }
+    }
+
+}
+
+public class Main{
+    public static void main(String[] args){
+        Animal L = new Lion();
+        Animal E1 = new Elephant();
+        Animal E2 = new Elephant();
+
+        ZooInventory.addAnimal(L);
+        ZooInventory.addAnimal(E1);
+        ZooInventory.addAnimal(E2);
+
+        ZooInventory.makeAllSounds();
+    }
+
+
+
+Q2. Project: “BankAccountSystem”
+
+Abstract class BankAccount
+
+Private attribute: balance (double)
+
+Getter/Setter for balance
+
+Constructor to initialize balance
+
+Abstract method: withdraw(double amount)
+
+Method: deposit(double amount) → adds to balance, prints "Deposited: {amount}, Balance: {balance}"
+
+Class SavingsAccount (inherits BankAccount)
+
+withdraw(double amount) → only withdraw if balance ≥ amount; else print "Insufficient Balance"
+
+Class CheckingAccount (inherits BankAccount)
+
+withdraw(double amount) → always withdraw, balance can go negative
+
+In main()
+
+Create SavingsAccount and CheckingAccount with 100 each
+
+Deposit 100 into SavingsAccount
+
+Withdraw 120 from both accounts
+
+Sample Output:
+
+Deposited: 100, Balance: 200
+Withdrawn: 120, Balance: 80
+Withdrawn: 120, Balance: -20
+
+
+abstract class BankAccount {
+    private double balance;
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public BankAccount(double balance) {
+        this.balance = balance;
+    }
+
+    abstract void withdraw(double amount);
+
+    void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposited: " + amount + " Balance: " + balance);
+    }
+}
+
+class SavingsAccount extends BankAccount{
+    public SavingsAccount(double balance) {
+        super(balance);
+    }
+
+    void withdraw(double amount){
+        if(getBalance()>=amount){
+            setBalance(getBalance() - amount);
+            System.out.println("Withdrawn: " + amount + " Balance: " + getBalance());
+        }
+        else{
+            System.out.println("Insufficient Balance");
+        }
+    }
+}
+
+class CheckingAccount extends BankAccount{
+    public CheckingAccount(double balance) {
+        super(balance);
+    }
+
+    void withdraw(double amount){
+        setBalance(getBalance() - amount);
+        System.out.println("Withdrawn: " + amount + " Balance: " + getBalance());
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        BankAccount s = new SavingsAccount(100.00);
+        BankAccount c = new CheckingAccount(100.00);
+
+        s.deposit(100);
+
+        s.withdraw(120);
+        c.withdraw(120);
+
+    }
+
+
+
+Q3. Project: “OnlineStoreDiscounts”
+
+Class DiscountUtils
+
+Static method: getRandomDiscount() → returns int 5–20
+
+Abstract class Product
+
+Attribute: price (double)
+
+Constructor to initialize price
+
+Abstract method: applyDiscount()
+
+Class Electronics (inherits Product)
+
+applyDiscount() → subtracts random discount%, prints "Electronics discounted price: {newPrice}"
+
+Class Clothing (inherits Product)
+
+applyDiscount() → subtracts half of random discount%, prints "Clothing discounted price: {newPrice}"
+
+In main()
+
+Create 1 Electronics (1000) and 1 Clothing (500)
+
+Apply discounts
+
+Sample Output:
+
+Electronics discounted price: 850.0
+Clothing discounted price: 475.0
+
+
+class DiscountUtils{
+    public static int getRandomDiscount(){
+        return (int)(Math.random()*16 + 5);
+    }
+}
+
+abstract class Product{
+    private double price;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Product(double price) {
+        this.price = price;
+    }
+
+    abstract void applyDiscount();
+}
+
+class Electronics extends Product{
+
+    public Electronics(double price) {
+        super(price);
+    }
+
+    public void applyDiscount(){
+        setPrice(getPrice() - getPrice()*(DiscountUtils.getRandomDiscount()/100.00));
+        System.out.println("Electronic Discounted Price: " + getPrice());
+    }
+}
+
+class Clothings extends Product{
+
+    public Clothings(double price) {
+        super(price);
+    }
+
+    public void applyDiscount(){
+        setPrice(getPrice() - getPrice()*((DiscountUtils.getRandomDiscount()/2.00)/100.00));
+        System.out.println("Clothings Discounted Price: " + getPrice());
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Product E = new Electronics(1000.00);
+        Product C = new Clothings(500.00);
+
+        E.applyDiscount();
+        C.applyDiscount();
+    }
+}
+
+
+Q4. Project: “SportsLeagueSimulator”
+
+Abstract class Team
+
+Attributes: name, score (int)
+
+Abstract method: playMatch()
+
+Class FootballTeam (inherits Team)
+
+playMatch() → adds random 0–3 to score
+
+Class BasketballTeam (inherits Team)
+
+playMatch() → adds random 50–100 to score
+
+In main()
+
+Create 1 FootballTeam & 1 BasketballTeam
+
+Simulate 3 rounds
+
+Print scores after each round
+
+Sample Output:
+
+FootballTeam Score: 2, BasketballTeam Score: 75
+FootballTeam Score: 4, BasketballTeam Score: 160
+FootballTeam Score: 5, BasketballTeam Score: 250
+
+
+abstract class Team{
+    private int name;
+    private int score;
+
+    public int getName() {
+        return name;
+    }
+
+    public void setName(int name) {
+        this.name = name;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    abstract int playMatch();
+}
+
+class FootballTeam extends Team{
+    public int playMatch(){
+        setScore(getScore() + (int)(Math.random()*4));
+        return getScore();
+    }
+}
+
+class BasketballTeam extends Team{
+    public int playMatch(){
+        setScore(getScore() + (int)(Math.random()*51 + 50));
+        return getScore();
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Team F = new FootballTeam();
+        Team B = new BasketballTeam();
+
+        for(int i=0; i<3; i++){
+            System.out.println("Football Team Score: " + F.playMatch() + " Basketball Team Score: " + B.playMatch());
+        }
+    }
+}
+
+
+Q5. Project: “LibraryManagement”
+
+Abstract class Book
+
+Attributes: title, author
+
+Abstract method: borrowBook()
+
+Class EBook → prints "Borrowed EBook: {title}"
+
+Class PrintedBook → prints "Borrowed Printed Book: {title}"
+
+Class Library
+
+Static ArrayList of Book
+
+Static method: addBook(Book) → adds book, prints total count
+
+Static method: borrowBook(int index) → calls borrowBook() if valid index else prints "Invalid Index"
+
+In main()
+
+Add 2 EBooks & 2 PrintedBooks
+
+Borrow books using index
+
+Sample Input/Output:
+
+Number of Total Books: 1
+Number of Total Books: 2
+Number of Total Books: 3
+Number of Total Books: 4
+Borrow Book Index: 2
+Borrowed Printed Book: Java Basics
+Borrow Book Index: 5
+Invalid Index
+
+
+import java.util.ArrayList;
+
+abstract class Book{
+    private String title;
+    private String author;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+    }
+
+    public abstract void borrowBooks();
+}
+
+class EBook extends Book{
+
+    public EBook(String title, String author) {
+        super(title, author);
+    }
+
+    public void borrowBooks(){
+        System.out.println("Borrowed EBook: " + getTitle());
+    }
+}
+
+class PrintedBook extends Book{
+
+    public PrintedBook(String title, String author) {
+        super(title, author);
+    }
+
+    public void borrowBooks(){
+        System.out.println("Borrowed PrintedBook: " + getTitle());
+    }
+}
+
+class Library{
+    public static ArrayList<Book> books = new ArrayList<>();
+
+    public static void addBook(Book b){
+        books.add(b);
+        System.out.println("Number of Total Books: " + books.size());
+    }
+
+    public static void borrowBooks(int index){
+        System.out.println("Borrow Book Index: " + index);
+        if(index>=1 && index <= books.size()){
+            books.get(index-1).borrowBooks();
+        }
+        else{
+            System.out.println("Invalid Index");
+        }
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+
+        Library.addBook(new EBook("Digital Logic", "Author A"));
+        Library.addBook(new EBook("Operating Systems", "Author B"));
+        Library.addBook(new PrintedBook("Java Basics", "Author C"));
+        Library.addBook(new PrintedBook("Data Structures", "Author D"));
+
+        Library.borrowBooks(2); // valid
+        Library.borrowBooks(5);
+
+
+    }
+
+
+
+Q7. Project: “OnlineExamSystem”
+
+Abstract class Question → attribute questionText, method askQuestion() abstract
+
+Class MCQ → prints "MCQ: {questionText}"
+
+Class TrueFalse → prints "True/False: {questionText}"
+
+Class Exam
+
+Static ArrayList of Question
+
+Static addQuestion(Question) → adds to list
+
+Static startExam() → loops & calls askQuestion()
+
+In main()
+
+Add 2 MCQs & 1 TrueFalse
+
+Start exam
+
+Sample Output:
+
+MCQ: What is OOP?
+MCQ: What is Inheritance?
+True/False: Java supports multiple inheritance?
+
+
+import java.util.ArrayList;
+
+abstract class Question{
+    private String questionText;
+
+    public String getQuestionText() {
+        return questionText;
+    }
+
+    public void setQuestionText(String questionText) {
+        this.questionText = questionText;
+    }
+
+    public Question(String questionText) {
+        this.questionText = questionText;
+    }
+
+    abstract void askQuestion();
+}
+
+class MCQ extends Question{
+
+    public MCQ(String questionText) {
+        super(questionText);
+    }
+
+    public void askQuestion(){
+        System.out.println("MCQ: " + getQuestionText());
+    }
+}
+
+class TrueFalse extends Question{
+
+    public TrueFalse(String questionText) {
+        super(questionText);
+    }
+
+    public void askQuestion(){
+        System.out.println("True/False: " + getQuestionText());
+    }
+}
+
+class Exam{
+    public static ArrayList<Question> questions = new ArrayList<>();
+
+    public static void askQuestion(Question q){
+        questions.add(q);
+    }
+
+    public static void startExam(){
+        for(int i=0; i< questions.size(); i++){
+            questions.get(i).askQuestion();
+        }
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Exam.askQuestion(new MCQ("What is OOP?"));
+        Exam.askQuestion(new MCQ("What is Inheritance?"));
+        Exam.askQuestion(new TrueFalse("Java supports multiple Inheritance?"));
+
+        Exam.startExam();
+    }
+}
