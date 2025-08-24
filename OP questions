@@ -296,3 +296,273 @@ public class Main{
 
     }
 }
+
+
+
+To produce a random number, you can use Math.Random(). This method returns a random
+value between 0.0 (inclusive) and 1.0 (exclusive). If you want to scale it to a different range, you
+can use addition or multiplication. For example, if I want to shift the random value to the range
+of 1 to 2, I can add 1 to the Random Value.
+- Create a project named “SimpleAutoRPG”
+- Create a class named MultiplierUtils
+- (Public & Static) Method 1: getRandomBuff
+- Returns a double
+- This method generates a random number between 1 and 2 and returns it.
+- (Public & Static) Method 2: getRandomNerf
+- Returns a double
+- This method generates a random number between 0 and 1 and returns it.
+
+- Create a class named Character
+- Private attributes: damage (double), health (double)
+- Create getter/setter methods and constructors as needed.
+- Method 1: attack
+- Receives nothing, returns double
+- This method does not have a body. It only defines a template for subclasses to
+use.
+
+- Method 2: takeDamage
+- Receives a Character object as a parameter, returns nothing.
+- Subtracts the returned value of the attack method from the value of the health
+of the current object.
+- Create a class named Player (inherits Character)
+- Create a constructor as per your needs.
+- Method 1: attack
+- Receives nothing, returns double
+- Returns the value of damage * MultiplierUtils.getRandomBuff()
+
+- Create a class named Villain (inherits Character)
+- Create a constructor as per your needs.
+- Method 1: attack
+- Receives nothing, returns double
+- Returns the value of damage * MultiplierUtils.getRandomNerf()
+
+- Inside main method:
+- Create a player object with damage 10, health 100.
+- Create a villain object with damage 10, health 100.
+- Create a while loop with a condition set to true, and inside the while loop, do:
+- Call the takeDamage method of the Player object, passing the villain object as a
+parameter.
+- Call the takeDamage method of the Villain object, passing the Player object as a
+parameter.
+
+- Print the health values of both the Player object and Villain object.
+- If the health of the Player object drops below 0, Print “Player Lost” and break
+the loop.
+- If the health of the Villain object drops below 0, Print “Villain Lost” and break
+the loop.
+- The sample output will likely not match your output, as we are using random
+numbers.
+
+Sample Output
+Player Health: 97.94, Villain Health: 82.81
+Player Health: 90.67, Villain Health: 65.14
+Player Health: 90.09, Villain Health: 50.54
+Player Health: 85.12, Villain Health: 36.58
+Player Health: 79.50, Villain Health: 22.78
+Player Health: 79.10, Villain Health: 9.37
+Player Health: 76.72, Villain Health: -9.72
+Evil Boss Lost
+
+
+
+import java.util.Scanner;
+
+// Utility class for random multipliers
+class MultiplierUtils {
+    public static double getRandomBuff() {
+        return Math.random() + 1; // 1.0 to 2.0
+    }
+
+    public static double getRandomNerf() {
+        return Math.random(); // 0.0 to 1.0
+    }
+}
+
+// Abstract Character class
+abstract class Character {
+    private double damage;
+    private double health;
+
+    public Character(double damage, double health) {
+        this.damage = damage;
+        this.health = health;
+    }
+
+    public double getDamage() { return damage; }
+    public double getHealth() { return health; }
+    public void setHealth(double health) { this.health = health; }
+
+    // Abstract attack method
+    public abstract double attack();
+
+    // Take damage from another character
+    public void takeDamage(Character attacker) {
+        this.health -= attacker.attack();
+    }
+}
+
+// Player class
+class Player extends Character {
+    public Player(double damage, double health) {
+        super(damage, health);
+    }
+
+    @Override
+    public double attack() {
+        return getDamage() * MultiplierUtils.getRandomBuff();
+    }
+}
+
+// Villain class
+class Villain extends Character {
+    public Villain(double damage, double health) {
+        super(damage, health);
+    }
+
+    @Override
+    public double attack() {
+        return getDamage() * MultiplierUtils.getRandomNerf();
+    }
+}
+
+// Main class
+public class SimpleAutoRPG {
+    public static void main(String[] args) {
+        Player player = new Player(10, 100);
+        Villain villain = new Villain(10, 100);
+
+        while (true) {
+            player.takeDamage(villain);
+            villain.takeDamage(player);
+
+            System.out.printf("Player Health: %.2f, Villain Health: %.2f%n", 
+                               player.getHealth(), villain.getHealth());
+
+            if (player.getHealth() <= 0) {
+                System.out.println("Player Lost");
+                break;
+            } else if (villain.getHealth() <= 0) {
+                System.out.println("Villain Lost");
+                break;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+- Create a project named “RPGInventoryManagement”
+- Create a class named “Potion”
+- Method 1: addEffect
+- Recives nothing, returns nothing.
+- This method has no body, it only defines a template for subclasses to use.
+- Create a class named “Health” (inherits Potion)
+- Method 1: addEffect
+- Recives nothing, returns nothing.
+- Prints “Health +10”
+
+- Create a class named “Stamina” (inherits Potion)
+- Method 1: addEffect
+- Receives nothing, returns nothing
+- Prints “Stamina +10”
+- Create a class named “Inventory”
+- Private & Static attributes: potionsList (An Array/ArrayList that contains Potions object,
+you may initialize the Array/ArrayList in any proper way).
+- (Public & Static) Method 1: addPotion
+- Recieves Potion object, Returns nothing
+- Adds the passed Potion object to the potionList. Prints “Number of Total Potion
+in the inventory: {count of total Potion in the Array/ArrayList}”.
+
+- (Public & Static) Method 2: activatePotion
+- Receives an index (int), returns nothing
+- Check if the index is valid. If so, call addEffect method. Else print “Invalid Index”.
+
+- Inside main method:
+- Create 2 Health and 2 Stamina Object. No user input required.
+- Add them to the potionList of Inventory using addPotion method.
+- Now call activatePotion method 2 times, taking the index from the user.
+
+Sample Input Sample Output
+Potion to Activate:
+2
+Potion to Activate:
+5
+
+Number of Total Potion in the
+inventory: 1
+Number of Total Potion in the
+inventory: 2
+Number of Total Potion in the
+inventory: 3
+Number of Total Potion in the
+inventory: 4
+Health +10
+Invalid Index
+
+
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Abstract Potion class
+abstract class Potion {
+    public abstract void addEffect();
+}
+
+// Health Potion
+class Health extends Potion {
+    @Override
+    public void addEffect() {
+        System.out.println("Health +10");
+    }
+}
+
+// Stamina Potion
+class Stamina extends Potion {
+    @Override
+    public void addEffect() {
+        System.out.println("Stamina +10");
+    }
+}
+
+// Inventory class
+class Inventory {
+    private static ArrayList<Potion> potionsList = new ArrayList<>();
+
+    public static void addPotion(Potion p) {
+        potionsList.add(p);
+        System.out.println("Number of Total Potion in the inventory: " + potionsList.size());
+    }
+
+    public static void activatePotion(int index) {
+        if (index >= 1 && index <= potionsList.size()) {
+            potionsList.get(index - 1).addEffect(); // 1-based index
+        } else {
+            System.out.println("Invalid Index");
+        }
+    }
+}
+
+// Main class
+public class RPGInventoryManagement {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Create potions
+        Inventory.addPotion(new Health());
+        Inventory.addPotion(new Health());
+        Inventory.addPotion(new Stamina());
+        Inventory.addPotion(new Stamina());
+
+        // Activate potions twice based on user input
+        for (int i = 0; i < 2; i++) {
+            System.out.println("Potion to Activate:");
+            int index = sc.nextInt();
+            Inventory.activatePotion(index);
+        }
+    }
+}
