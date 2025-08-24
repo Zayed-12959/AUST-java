@@ -1,0 +1,298 @@
+Question: “MagicBattleSimulator”
+
+Project Name: MagicBattleSimulator
+
+Step 1: Utility Class
+
+Create a class named MagicUtils
+
+Public & Static Method 1: getRandomSpellPower()
+
+Returns a double
+
+Generates a random number between 5 and 15 and returns it
+
+Public & Static Method 2: getRandomCursePower()
+
+Returns a double
+
+Generates a random number between 0 and 10 and returns it
+
+Step 2: Abstract Character Class
+
+Create an abstract class Wizard
+
+Private attributes: mana (double), health (double)
+
+Getter and setter methods for mana and health
+
+Constructor to initialize mana and health
+
+Abstract method: castSpell() → receives nothing, returns double
+
+Method: takeDamage(Wizard opponent) → subtracts opponent.castSpell() from this object’s health
+
+Step 3: Player Class
+
+Create a class named Sorcerer (inherits Wizard)
+
+Constructor as needed
+
+Implement castSpell()
+
+Returns mana * MagicUtils.getRandomSpellPower()
+
+Step 4: Villain Class
+
+Create a class named DarkMage (inherits Wizard)
+
+Constructor as needed
+
+Implement castSpell()
+
+Returns mana * MagicUtils.getRandomCursePower()
+
+Step 5: Main Method
+
+Inside main():
+
+Create a Sorcerer object with mana = 10, health = 120
+
+Create a DarkMage object with mana = 10, health = 120
+
+Use a while(true) loop, and inside the loop:
+
+Sorcerer takes damage from DarkMage
+
+DarkMage takes damage from Sorcerer
+
+Print health values:
+
+Sorcerer Health: XX.XX, DarkMage Health: XX.XX
+
+
+If Sorcerer’s health ≤ 0 → print "Sorcerer Lost" and break loop
+
+If DarkMage’s health ≤ 0 → print "DarkMage Lost" and break loop
+
+Sample Output (values will vary due to randomness)
+Sorcerer Health: 105.23, DarkMage Health: 85.12
+Sorcerer Health: 92.48, DarkMage Health: 60.54
+Sorcerer Health: 70.30, DarkMage Health: 40.12
+Sorcerer Health: 55.10, DarkMage Health: 10.65
+Sorcerer Health: 48.90, DarkMage Health: -5.20
+DarkMage Lost
+
+
+class MagicUtils{
+    public static double getRandomSpellPower(){
+        return ((Math.random()*3) + 1);
+    }
+
+    public static double getRandomCursePower(){
+        return ((Math.random()*2));
+    }
+}
+
+abstract class Wizard{
+    private double mana;
+    private double health;
+
+    public double getMana() {
+        return mana;
+    }
+
+    public void setMana(double mana) {
+        this.mana = mana;
+    }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
+    }
+
+    public Wizard(double mana, double health) {
+        this.mana = mana;
+        this.health = health;
+    }
+
+    public abstract double castSpell();
+
+    public void takeDamage(Wizard opponent){
+        this.health = getHealth() - opponent.castSpell();
+    }
+}
+
+class Sorcerer extends Wizard{
+    public Sorcerer(double mana, double health) {
+        super(mana, health);
+    }
+
+    public double castSpell(){
+        return getMana() * MagicUtils.getRandomSpellPower();
+    }
+}
+
+class Darkmage extends Wizard{
+    public Darkmage(double mana, double health) {
+        super(mana, health);
+    }
+
+    public double castSpell(){
+        return getMana() * MagicUtils.getRandomCursePower();
+    }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Wizard s = new Sorcerer(10, 120);
+        Wizard d = new Darkmage(10, 120);
+
+        while(true){
+            s.takeDamage(d);
+            d.takeDamage(s);
+            System.out.println("Sorcerer Health: " + s.getHealth() + " Darkmage Health: " + d.getHealth());
+            if(s.getHealth()<=0){
+                System.out.println("Sorcerer Lost");
+                break;
+            }
+            else if (d.getHealth()<=0) {
+                System.out.println("Darkmage Lost");
+                break;
+            }
+        }
+    }
+}
+
+
+
+
+Question: “RPGWeaponManagement”
+
+Create a project named “RPGWeaponManagement”
+
+Create an abstract class named Weapon
+
+Method 1: useWeapon
+
+Receives nothing, returns nothing.
+
+This method has no body, it only defines a template for subclasses to implement.
+
+Create a class named Sword (inherits Weapon)
+
+Method 1: useWeapon
+
+Receives nothing, returns nothing.
+
+Prints "Sword slashes for 15 damage"
+
+Create a class named Bow (inherits Weapon)
+
+Method 1: useWeapon
+
+Receives nothing, returns nothing.
+
+Prints "Bow shoots for 10 damage"
+
+Create a class named WeaponInventory
+
+Private & static attribute: weaponsList (ArrayList that contains Weapon objects)
+
+Public & static method 1: addWeapon
+
+Receives a Weapon object, returns nothing
+
+Adds the weapon to weaponsList
+
+Prints "Total Weapons in inventory: {count}"
+
+Public & static method 2: activateWeapon
+
+Receives an index (int), returns nothing
+
+If the index is valid, call useWeapon() of the weapon at that index
+
+Else, print "Invalid Index"
+
+Inside the main method:
+
+Create 2 Sword and 2 Bow objects
+
+Add all 4 to WeaponInventory using addWeapon method
+
+Ask the user to input 2 indices to activate weapons
+
+Call activateWeapon with the indices provided
+
+Sample Input
+Weapon to Activate:
+1
+Weapon to Activate:
+5
+
+Sample Output
+Total Weapons in inventory: 1
+Total Weapons in inventory: 2
+Total Weapons in inventory: 3
+Total Weapons in inventory: 4
+Sword slashes for 15 damage
+Invalid Index
+
+
+import java.util.ArrayList;
+
+abstract class Weapon{
+    public abstract void useWeapon();
+}
+
+class Sword extends Weapon{
+    public void useWeapon() {
+        System.out.println("Sword slashes for 15 damage");
+    }
+}
+
+class Bow extends Weapon{
+    public void useWeapon() {
+        System.out.println("Bow shoots for 10 damage");
+    }
+}
+
+class WeaponInventory{
+     private static ArrayList<Weapon> weaponsList = new ArrayList<>();
+
+     public static void addWeapon(Weapon wep){
+         weaponsList.add(wep);
+         System.out.println("Total weapons in Inventory: " + weaponsList.size());
+     }
+
+     public static void activateWeapon(int index){
+         if(index>=1 && index<= weaponsList.size()){
+             weaponsList.get(index-1).useWeapon();
+         }
+         else{
+             System.out.println("Invalid Index");
+         }
+     }
+}
+
+public class Main{
+    public static void main(String[] args){
+        Weapon s1 = new Sword();
+        Weapon s2 = new Sword();
+        Weapon b = new Bow();
+
+        WeaponInventory.addWeapon(s1);
+        WeaponInventory.addWeapon(s2);
+        WeaponInventory.addWeapon(b);
+
+        WeaponInventory.activateWeapon(1);
+        WeaponInventory.activateWeapon(3);
+        WeaponInventory.activateWeapon(5);
+
+
+    }
+}
