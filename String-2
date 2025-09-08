@@ -1,0 +1,91 @@
+package companymailgenerator1;
+import java.util.ArrayList;
+/**
+ *
+ * @author Student
+ */
+public class Company {
+    ArrayList<String>employeeNIDList= new ArrayList<String>();
+    ArrayList<String>employeeList= new ArrayList<String>();
+
+    public ArrayList<String> getEmployeeNIDList() {
+        return employeeNIDList;
+    }
+
+    public ArrayList<String> getEmployeeList() {
+        return employeeList;
+    }
+    
+     public void addEmployee(String employee, String nid) {
+        this.employeeList.add(employee);
+        this.employeeNIDList.add(nid);
+    }
+    
+    
+}
+
+package companymailgenerator1;
+import java.util.ArrayList;
+/**
+ *
+ * @author Student
+ */
+public class MailGenerator {
+    
+    public static void generateMailAddress(Company com){
+         ArrayList<String>employeename=com.getEmployeeList();
+         ArrayList<String>employeeid=com.getEmployeeNIDList();
+        for(int i = 0; i < com.getEmployeeList().size(); i++) {
+            String[] emp = employeename.get(i).split(" ");
+            String NID=employeeid.get(i);
+            String firstname=emp[0].toLowerCase();
+            String middlename=emp[1].toLowerCase();
+            String lastname=emp[2].toLowerCase();
+            System.out.println(NID);
+            String n = NID.substring(5, 8);
+            String mail=lastname+"."+n+"@mycompany.co";
+            System.out.println(n);
+            System.out.println(mail);
+            
+        }
+       
+    }
+
+    
+}
+
+package companymailgenerator1;
+import java.util.Scanner;
+/**
+ *
+ * @author Student
+ */
+public class CompanyMailGenerator1 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // TODO code application logic here
+        Company cp=new Company();
+        Scanner sc = new Scanner(System.in);
+        
+        
+        
+        
+        
+        String s1=sc.nextLine();
+        //String s2=sc.nextLine();
+        //String s3=sc.nextLine();
+        
+        String n1=sc.nextLine();
+        //String n2=sc.nextLine();
+        //String n3=sc.nextLine();
+        
+       cp.addEmployee(s1,n1);
+       //cp.addEmployee(s2,n2);
+       //cp.addEmployee(s3,n3);
+       
+       MailGenerator.generateMailAddress(cp);
+    }
+  }
