@@ -1,0 +1,62 @@
+public class University {
+    private String universityName;
+    private ArrayList<String> studentNameList = new ArrayList<>();
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public ArrayList<String> getStudentNameList() {
+        return studentNameList;
+    }
+
+    public void addStudent(String name) {
+        studentNameList.add(name);
+    }
+}
+
+public class MailGenerator {
+    public static void generateMailAddress(University university) {
+        ArrayList<String> studentNames = university.getStudentNameList();
+
+        for (int i = 0; i < studentNames.size(); i++) {   // ✅ standard for loop
+            String fullName = studentNames.get(i).trim();
+            String[] nameParts = fullName.split("\\s+");
+
+            if (nameParts.length >= 2) {
+                String firstName = nameParts[0].toLowerCase();
+                String middleName = nameParts[1].toLowerCase();
+
+                String emailAddress = firstName + "." + middleName + "@"
+                        + university.getUniversityName().toLowerCase() + ".edu";
+
+                System.out.println(emailAddress);
+            } else {
+                System.out.println("Invalid name format: " + fullName);
+            }
+        }
+    }
+}
+
+public class UniversityMailGenerator {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        University uni = new University();
+
+        System.out.print("Enter University Name: ");
+        String uniName = in.nextLine();
+        uni.setUniversityName(uniName);
+
+        System.out.println("Enter 3 student names:");
+        for (int i = 0; i < 3; i++) {   // ✅ standard for loop
+            String student = in.nextLine();
+            uni.addStudent(student);
+        }
+
+        MailGenerator.generateMailAddress(uni);
+    }
+}
