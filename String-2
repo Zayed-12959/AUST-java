@@ -38,11 +38,14 @@ public class MailGenerator {
         for(int i = 0; i < com.getEmployeeList().size(); i++) {
             String[] emp = employeename.get(i).split(" ");
             String NID=employeeid.get(i);
+
             String firstname=emp[0].toLowerCase();
             String middlename=emp[1].toLowerCase();
             String lastname=emp[2].toLowerCase();
+
             System.out.println(NID);
             String n = NID.substring(5, 8);
+
             String mail=lastname+"."+n+"@mycompany.co";
             System.out.println(n);
             System.out.println(mail);
