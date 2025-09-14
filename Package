@@ -1,0 +1,56 @@
+package customexceptions;
+
+public class EmptyArrayException extends Exception {
+
+    public EmptyArrayException() {
+        System.out.println("The Array is Empty");
+    }
+    
+}
+
+package andagonda;
+
+import customexceptions.EmptyArrayException;
+
+public class Utils {
+    
+    static double calculateAverage(int[] arr){
+        
+        int sum = 0;
+        
+        try{
+           if(arr.length == 0){
+               throw new EmptyArrayException();
+           } 
+           else{
+               for(int i=0; i<arr.length; i++){
+                 sum = sum + arr[i];
+               }
+               return (double)sum/arr.length;
+           }
+        }catch(EmptyArrayException eae){
+            System.out.println("Exception caught: " + eae.getMessage());
+            return 0;
+        }
+    }
+}
+
+package andagonda;
+
+public class Andagonda {
+
+    public static void main(String[] args) {
+        
+        Utils u = new Utils();
+        
+        int[] numbers1 = {10, 20, 30, 40, 50};
+        int[] numbers2 = {};
+        int[] numbers3 = {5, 15};
+
+        System.out.println("Average of numbers1: " + u.calculateAverage(numbers1));
+        System.out.println("Average of numbers2: " + u.calculateAverage(numbers2)); // will trigger exception inside method
+        System.out.println("Average of numbers3: " + u.calculateAverage(numbers3));
+    }
+    
+}
+
