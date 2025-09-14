@@ -41,15 +41,15 @@ public class Andagonda {
 
     public static void main(String[] args) {
         
-        Utils u = new Utils();
+        //Utils u = new Utils();
         
         int[] numbers1 = {10, 20, 30, 40, 50};
         int[] numbers2 = {};
         int[] numbers3 = {5, 15};
 
-        System.out.println("Average of numbers1: " + u.calculateAverage(numbers1));
-        System.out.println("Average of numbers2: " + u.calculateAverage(numbers2)); // will trigger exception inside method
-        System.out.println("Average of numbers3: " + u.calculateAverage(numbers3));
+        System.out.println("Average of numbers1: " + Utils.calculateAverage(numbers1));
+        System.out.println("Average of numbers2: " + Utils.calculateAverage(numbers2)); // will trigger exception inside method
+        System.out.println("Average of numbers3: " + Utils.calculateAverage(numbers3));
     }
     
 }
