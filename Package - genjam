@@ -1,0 +1,28 @@
+public void setSemester(String semester) {
+        try{
+            if(semester.startsWith("Spring") || semester.startsWith("Fall")){
+                StringBuffer str = new StringBuffer(semester);
+                
+                str.delete(0, semester.length() - 4);
+                
+                String s = str.toString();
+                int year = Integer.parseInt(s);
+                
+                if(year>0){
+                    this.semester = semester;
+                    System.out.println("Semester set successfully" + semester);
+                }
+                else{
+                    throw new InvalidSemestemException();
+                }
+            }
+            else{
+                throw new InvalidSemestemException();
+            }
+        }catch(NumberFormatException e){
+            System.out.println("Inavlid year format in semester" + semester);
+        }
+        catch(InvalidSemestemException e){
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
