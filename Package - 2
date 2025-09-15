@@ -1,0 +1,127 @@
+package employeestaffs.exceptions;
+
+public class NameTooShortException extends Exception {
+    public NameTooShortException() {
+        super("Name must be at least 3 characters long.");
+    }
+
+    public NameTooShortException(String message) {
+        super(message);
+    }
+}
+
+package employeestaffs.exceptions;
+
+public class InvalidIdException extends Exception {
+    public InvalidIdException() {
+        super("ID cannot be 0.");
+    }
+
+    public InvalidIdException(String message) {
+        super(message);
+    }
+}
+
+package employeestaffs.exceptions;
+
+public class InvalidSalaryException extends Exception {
+    public InvalidSalaryException() {
+        super("Salary cannot be negative.");
+    }
+
+    public InvalidSalaryException(String message) {
+        super(message);
+    }
+}
+
+package employeestaffs;
+
+import employeestaffs.exceptions.NameTooShortException;
+import employeestaffs.exceptions.InvalidIdException;
+import employeestaffs.exceptions.InvalidSalaryException;
+
+public class Employee {
+    private String name;
+    private int id;
+    private double salary;
+
+    public Employee(String name, int id, double salary) {
+        setName(name);
+        setId(id);
+        setSalary(salary);
+    }
+    
+    
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        try {
+            if (name == null || name.length() < 3) {
+                throw new NameTooShortException();
+            }
+            this.name = name;
+        } catch (NameTooShortException e) {
+            System.out.println("Error setting name: " + e.getMessage());
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        try {
+            if (id == 0) {
+                throw new InvalidIdException();
+            }
+            this.id = id;
+        } catch (InvalidIdException e) {
+            System.out.println("Error setting id: " + e.getMessage());
+        }
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(double salary) {
+        try {
+            if (salary < 0) {
+                throw new InvalidSalaryException();
+            }
+            this.salary = salary;
+        } catch (InvalidSalaryException e) {
+            System.out.println("Error setting salary: " + e.getMessage());
+        }
+    }
+        
+}
+
+package hudai;
+
+import employeestaffs.Employee;
+
+public class Hudai {
+
+    public static void main(String[] args) {
+        // Valid employee
+        Employee emp1 = new Employee("Alice", 101, 5000);
+        System.out.println("Employee 1 -> Name: " + emp1.getName() + ", ID: " + emp1.getId() + ", Salary: " + emp1.getSalary());
+
+        // Invalid name
+        Employee emp2 = new Employee("Al", 102, 4000);
+        System.out.println("Employee 2 -> Name: " + emp2.getName() + ", ID: " + emp2.getId() + ", Salary: " + emp2.getSalary());
+
+        // Invalid id
+        Employee emp3 = new Employee("Bob", 0, 3000);
+        System.out.println("Employee 3 -> Name: " + emp3.getName() + ", ID: " + emp3.getId() + ", Salary: " + emp3.getSalary());
+
+        // Invalid salary
+        Employee emp4 = new Employee("Charlie", 103, -1000);
+        System.out.println("Employee 4 -> Name: " + emp4.getName() + ", ID: " + emp4.getId() + ", Salary: " + emp4.getSalary());
+    }
+    
+}
