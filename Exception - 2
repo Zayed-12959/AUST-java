@@ -1,0 +1,45 @@
+class InsufficientBalanceException extends RuntimeException {
+    public InsufficientBalanceException(String message) {
+        super(message);
+    }
+}
+
+class BankAccount {
+    private double balance;
+
+    public BankAccount(double balance) {
+        this.balance = balance;
+    }
+
+    public void withdraw(double amount) {
+        if (amount > balance) {
+            throw new InsufficientBalanceException("Not enough balance! Your balance is " + balance);
+        }
+        balance -= amount;
+        System.out.println("Withdraw successful. Remaining balance: " + balance);
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        BankAccount account = new BankAccount(500);
+
+        // First transaction
+        try {
+            account.withdraw(700);  // Will throw exception
+        } catch (InsufficientBalanceException e) {
+            System.out.println("Exception caught: " + e.getMessage());
+        }
+
+        // Second transaction
+        try {
+            account.withdraw(200);  // Valid
+        } catch (InsufficientBalanceException e) {
+            System.out.println("Exception caught: " + e.getMessage());
+        }
+    }
+}
