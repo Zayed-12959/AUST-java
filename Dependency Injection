@@ -1,0 +1,109 @@
+public interface Sendable {
+    public void send(String message);
+}
+
+public class MessageSender implements Sendable {
+
+    @Override
+    public void send(String message) {
+        System.out.println("Sending via Message: " + message);
+    }
+    
+}
+
+public class EmailSender implements Sendable{
+
+    @Override
+    public void send(String message) {
+        System.out.println("Sending via Email: " + message);
+    }
+    
+}
+
+public class Student {
+    private String name;
+    private double cgpa;
+
+    public Student(String name, double cgpa) {
+        this.name = name;
+        this.cgpa = cgpa;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getCgpa() {
+        return cgpa;
+    }
+
+    public void setCgpa(double cgpa) {
+        this.cgpa = cgpa;
+    }
+    
+}
+
+public class StudentResultSenderBadExample {
+    public void sendResult(Student s, String choice) {
+        String result = s.getName() + " : " + s.getCgpa();
+        
+        if (choice.equals("email")) {
+            System.out.println("Sending via Email: " + result);
+        }
+        else {
+            System.out.println("Sending via Message: " + result);
+        }
+        
+        /**
+         * This is a bad example.
+         * If we want to add new sending feature like sending via Messenger, WhatsApp etc.
+         * We will have to modify this class, add conditions and what not.
+         * The point is, we will have to make changes in this method. And this do not follow a key design principle (Open/Close Principle, A class should be open for extension and close for modification).
+         * The proper way (Dependency Injection) is shown in StudentResultSender.java class.
+         */
+    }
+}
+
+public class StudentResultSender {
+    private Sendable sender;
+
+    public StudentResultSender(Sendable sender) {
+        this.sender = sender;
+    }
+    
+    public void sendResult(Student s) {
+        String result = s.getName() + " : " + s.getCgpa();
+        
+        /** In this way, how the result will be sent is decided outside of this class by setting the value of sender reference.
+         * If the reference is set to a EmailSender object, it will be sent via Email.
+         * If the reference is set to a MessageSender object, it will be sent via Message.
+         * In the future, if we need to implement a new sending method, we will not have to touch any of the existing classes, especially not this class.
+         * To implement a new sending method, we will create a new class that implements the Sendable interface, and it will work with this method.
+         */
+        
+        sender.send(result);
+    }
+}
+
+public class DIDemo {
+
+    public static void main(String[] args) {
+        Student s = new Student("Asif", 3.99);
+        
+        // Bad Example
+        // StudentResultSenderBadExample srs = new StudentResultSenderBadExample();
+        // srs.sendResult(s, "email");
+        // srs.sendResult(s, "message");
+        
+        StudentResultSender srsEmail = new StudentResultSender(new EmailSender());
+        srsEmail.sendResult(s);
+        
+        StudentResultSender srsMessage = new StudentResultSender(new MessageSender());
+        srsMessage.sendResult(s);
+    }
+    
+}
