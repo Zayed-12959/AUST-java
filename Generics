@@ -1,0 +1,47 @@
+public class Product {
+    private String name;
+    private double price;
+
+    public Product(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+    
+    public void displayInfo() {
+        System.out.println(this.name + " -->" + this.price + "Tk");
+    }
+}
+
+// If we were to use multiple generics, we can name them like T1, T2, T3...
+// the declaration for two generics would be: public class Cart<T1, T2> {...}
+// We can make sure that the generics are subclasses of a specific class (eg. Product) with declaration like: public class Cart <T extends Product> {...}
+// We can make sure that the generics are subclasses of a specific interface (eg. Sendable) with declaration like: public class Cart <T implements Sendable> {...}
+
+public class Cart<T> {
+    private Object[] cart = new Object[100]; 
+    private int insertIdx = 0;
+    
+    public void add(T p) {
+        // If the generics declaration extended a class (eg. public class Cart <T extends Product> {...}), we could've used a class specific method
+        // p.printProductInfo();
+        cart[insertIdx++] = p;
+    }
+    
+    public T get(int idx) {
+        return (T) cart[idx];
+    }
+}
+
+public class GenericsDemo {
+
+    public static void main(String[] args) {
+        Product p1 = new Product("Shirt", 600);
+        
+        // When creating object class that have generics in definition, you will have to set the generic to a class inside the <> brackets. Like ArrayList.
+        Cart<Product> c = new Cart<>();
+        c.add(p1);
+        Product p2 = c.get(0);
+        
+    }
+    
+}
